@@ -4,7 +4,12 @@ Itinerario interactivo del viaje: **https://jacoal1234-creator.github.io/nyc-tri
 
 ## Cómo cambiar algo
 - **Proponer un cambio:** botón "✏️ Proponer cambio" en cada actividad (abre un Issue).
-- **Editar directo:** `data/itinerario.csv` (actividades) y `data/reservas.csv` (checklist). La página se actualiza sola en 1–2 min.
+- **Editar directo** (la página se actualiza sola en 1–2 min):
+  - `data/itinerario.csv`: el plan día por día
+  - `data/reservas.csv`: checklist de reservas
+  - `data/opciones.csv`: catálogo de lugares de la sección Explorar (coordenadas sacadas de OpenStreetMap/Nominatim)
+  - `data/rutas.csv`: rutas a pie (paradas separadas por `|`)
+  - `data/inspiracion.csv`: videos, hashtags y guías web
 
 ### Columnas de `itinerario.csv`
 | Columna | Qué es |
@@ -15,5 +20,6 @@ Itinerario interactivo del viaje: **https://jacoal1234-creator.github.io/nyc-tri
 | reserva | `si` / `no` |
 | estado | `Confirmado`, `Por reservar` o `Por confirmar` |
 | opcional | `si` = plan alternativo (no suma al presupuesto por defecto) |
+| categoria | Comida, Vistas, Barrios, Museos, Temporada, Noche, Compras, Experiencias, Shows, Deportes, Íconos, Transporte u Hotel (define color e ícono) |
 
 ⚠️ Repo público: **no pongan códigos de reserva, nombres completos ni datos personales.**
