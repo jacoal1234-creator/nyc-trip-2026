@@ -4,311 +4,641 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>NYC Noviembre 2026</title>
+<meta name="description" content="Itinerario interactivo: Nueva York, 21–28 de noviembre de 2026">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <style>
 :root{
-  --bg:#f6f4ef; --card:#ffffff; --ink:#1d1d1f; --muted:#6b6b70; --line:#e4e1d9;
-  --accent:#d6452b; --accent-soft:#fbe3dc; --ok:#2f7d4f; --ok-soft:#dcefe3;
-  --warn:#9a6a00; --warn-soft:#fbefcc; --opt:#5a5aa8; --opt-soft:#e6e6f6;
+  --night:#0b0e1f; --night-2:#141936; --paper:#f4f1ea; --paper-2:#ebe6db; --ink:#0b0e1f; --muted:#5d5f6e;
+  --taxi:#ffc21a; --taxi-ink:#3a2a00; --brick:#e2462c; --line:rgba(11,14,31,.12);
+  --ok:#1f8a52; --ok-soft:#d8efe1; --warn:#9a6a00; --warn-soft:#fbefcc; --res:#c7341b; --res-soft:#fbe0d9; --opt:#4b4bb0; --opt-soft:#e4e4f6;
+  --card:#ffffff; --radius:22px;
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
-    --bg:#141416; --card:#1e1e22; --ink:#f1f1f3; --muted:#a0a0a8; --line:#2e2e34;
-    --accent:#ff6a4d; --accent-soft:#3a1f1a; --ok:#6fcf95; --ok-soft:#1a3324;
-    --warn:#f2c14e; --warn-soft:#3a2f12; --opt:#a3a3ff; --opt-soft:#25254a;
+    --paper:#0f1226; --paper-2:#161a33; --ink:#f1efe8; --muted:#a3a5b8; --line:rgba(255,255,255,.12); --card:#191d38;
+    --ok:#6fd49b; --ok-soft:#173826; --warn:#f2c14e; --warn-soft:#3a2f12; --res:#ff7a5e; --res-soft:#3d1d17; --opt:#a9a9ff; --opt-soft:#26264d;
   }
 }
 :root[data-theme="dark"]{
-  --bg:#141416; --card:#1e1e22; --ink:#f1f1f3; --muted:#a0a0a8; --line:#2e2e34;
-  --accent:#ff6a4d; --accent-soft:#3a1f1a; --ok:#6fcf95; --ok-soft:#1a3324;
-  --warn:#f2c14e; --warn-soft:#3a2f12; --opt:#a3a3ff; --opt-soft:#25254a;
+  --paper:#0f1226; --paper-2:#161a33; --ink:#f1efe8; --muted:#a3a5b8; --line:rgba(255,255,255,.12); --card:#191d38;
+  --ok:#6fd49b; --ok-soft:#173826; --warn:#f2c14e; --warn-soft:#3a2f12; --res:#ff7a5e; --res-soft:#3d1d17; --opt:#a9a9ff; --opt-soft:#26264d;
 }
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
-a{color:var(--accent)}
-.wrap{max-width:920px;margin:0 auto;padding:0 16px 60px}
-header{padding:28px 0 12px}
-h1{font-size:28px;margin:0;letter-spacing:-.5px}
-.sub{color:var(--muted);margin-top:4px}
-.count{display:inline-block;margin-top:10px;background:var(--accent);color:#fff;padding:4px 12px;border-radius:999px;font-weight:600;font-size:13px}
-nav.tabs{position:sticky;top:0;z-index:1000;background:var(--bg);display:flex;gap:6px;overflow-x:auto;padding:10px 0;border-bottom:1px solid var(--line)}
-nav.tabs button{flex:0 0 auto;border:1px solid var(--line);background:var(--card);color:var(--ink);padding:8px 14px;border-radius:999px;font-size:14px;cursor:pointer}
-nav.tabs button.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
-.days{display:flex;gap:8px;overflow-x:auto;padding:14px 0 6px}
-.day{flex:0 0 auto;border:1px solid var(--line);background:var(--card);border-radius:14px;padding:8px 12px;cursor:pointer;text-align:left;color:var(--ink);min-width:78px}
-.day b{display:block;font-size:18px}
-.day span{font-size:12px;color:var(--muted)}
-.day.on{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent) inset}
-.dayhead{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px;margin:14px 0 6px}
-.dayhead h2{margin:0;font-size:20px}
-.dayhead .tot{color:var(--muted);font-size:14px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 16px;margin:10px 0;display:grid;grid-template-columns:58px 1fr;gap:10px}
-.card.opt{border-style:dashed;opacity:.92}
-.time{font-weight:700;font-variant-numeric:tabular-nums;color:var(--accent)}
-.title{font-weight:650;font-size:16px}
-.place{color:var(--muted);font-size:13px}
-.notes{margin:6px 0 0;font-size:14px}
-.badges{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
-.b{font-size:12px;padding:2px 8px;border-radius:999px;font-weight:600}
-.b.res{background:var(--accent-soft);color:var(--accent)}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.55 "DM Sans",system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body.loading{overflow:hidden}
+a{color:inherit}
+.serif{font-family:"Instrument Serif",serif;font-style:italic;font-weight:400}
+.wrap{max-width:1180px;margin:0 auto;padding:0 16px}
+@media(min-width:700px){.wrap{padding:0 32px}}
+
+/* ---------- LOADER ---------- */
+#loader{position:fixed;inset:0;z-index:9999;pointer-events:none}
+#loader .cols{position:absolute;inset:0;display:flex}
+#loader .cols i{flex:1;background:var(--night);margin-right:-1px}
+#loader .lc{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:space-between;padding:24px;color:#fff}
+#loader .lt{font-weight:700;letter-spacing:.3em;font-size:13px;opacity:.7}
+#loader .big{font-size:clamp(90px,22vw,260px);line-height:.85;font-weight:700;letter-spacing:-.05em;font-variant-numeric:tabular-nums;color:var(--taxi)}
+#loader .bar{height:2px;background:rgba(255,255,255,.15);margin-top:14px}
+#loader .bar b{display:block;height:100%;width:0;background:var(--taxi)}
+
+/* ---------- NAV ---------- */
+.nav{position:fixed;top:14px;left:0;right:0;z-index:1500;display:flex;justify-content:space-between;align-items:center;padding:0 16px;pointer-events:none}
+@media(min-width:700px){.nav{padding:0 32px}}
+.pill{pointer-events:auto;background:rgba(255,255,255,.9);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:999px;box-shadow:0 6px 24px rgba(11,14,31,.12);display:flex;align-items:center;gap:4px;padding:6px}
+.logo{font-weight:700;letter-spacing:.28em;font-size:14px;padding:10px 16px;color:var(--night);text-decoration:none}
+.logo span{color:var(--brick)}
+.nav-links{display:none}
+.nav-links a{color:var(--night);text-decoration:none;font-size:14px;font-weight:500;padding:9px 14px;border-radius:999px;transition:background .25s,color .25s}
+.nav-links a:hover,.nav-links a.on{background:var(--night);color:#fff}
+@media(min-width:900px){.nav-links{display:flex}}
+.menu-btn{width:44px;height:44px;border-radius:50%;border:0;background:var(--night);color:#fff;font-size:18px;cursor:pointer}
+@media(min-width:900px){.menu-btn{display:none}}
+.mobile-menu{position:fixed;inset:0;z-index:1400;background:var(--night);color:#fff;display:flex;flex-direction:column;justify-content:center;padding:32px;clip-path:circle(0% at calc(100% - 38px) 36px);transition:clip-path .7s cubic-bezier(.7,0,.2,1)}
+.mobile-menu.open{clip-path:circle(150% at calc(100% - 38px) 36px)}
+.mobile-menu a{color:#fff;text-decoration:none;font-size:44px;font-weight:700;letter-spacing:-.03em;line-height:1.25}
+.mobile-menu a:nth-child(even){color:var(--taxi)}
+
+/* ---------- HERO ---------- */
+.hero{position:relative;min-height:100svh;background:radial-gradient(1200px 600px at 80% 110%,#2a2f6b 0%,transparent 60%),var(--night);color:#fff;overflow:hidden;display:flex;align-items:flex-end;padding:120px 0 48px}
+.hero .wrap{position:relative;z-index:2;width:100%}
+.hero h1{margin:0;font-weight:700;font-size:clamp(64px,13vw,190px);line-height:.88;letter-spacing:-.055em}
+.hero h1 .ln{display:block;overflow:hidden;padding-bottom:.06em}
+.hero h1 .ln>span{display:inline-block}
+.hero h1 .y{color:var(--taxi)}
+.hero h1 .serif{letter-spacing:-.02em;font-size:.92em}
+.hero-foot{display:flex;flex-wrap:wrap;gap:20px;justify-content:space-between;align-items:flex-end;margin-top:30px}
+.hero p{max-width:440px;color:rgba(255,255,255,.72);font-size:17px;margin:0}
+.btns{display:flex;gap:10px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:14px 22px;border-radius:999px;font-weight:600;text-decoration:none;font-size:15px;border:1px solid transparent;transition:transform .3s cubic-bezier(.2,.8,.2,1),background .3s;will-change:transform}
+.btn.y{background:var(--taxi);color:var(--taxi-ink)}
+.btn.o{border-color:rgba(255,255,255,.35);color:#fff}
+.btn.o:hover{background:rgba(255,255,255,.1)}
+.chip{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);padding:8px 14px;border-radius:999px;font-size:13px;margin-bottom:22px}
+.chip i{width:8px;height:8px;border-radius:50%;background:var(--taxi);box-shadow:0 0 0 0 rgba(255,194,26,.6);animation:pulse 2s infinite}
+@keyframes pulse{70%{box-shadow:0 0 0 10px rgba(255,194,26,0)}100%{box-shadow:0 0 0 0 rgba(255,194,26,0)}}
+.scroll-hint{position:absolute;right:32px;bottom:40px;z-index:2;font-size:12px;letter-spacing:.2em;color:rgba(255,255,255,.55);writing-mode:vertical-rl;display:none}
+@media(min-width:900px){.scroll-hint{display:block}}
+
+/* 3D skyline */
+.city{position:absolute;right:-6%;top:6%;width:min(760px,95vw);height:min(760px,95vw);perspective:1400px;z-index:1;pointer-events:none;opacity:.95}
+@media(max-width:700px){.city{right:-35%;top:2%;opacity:.4}}
+.scene{position:absolute;left:50%;top:50%;width:440px;height:440px;margin:-220px 0 0 -220px;transform-style:preserve-3d;transform:rotateX(60deg) rotateZ(-38deg)}
+.ground{position:absolute;inset:-40px;background:
+  linear-gradient(rgba(255,255,255,.06) 1px,transparent 1px) 0 0/22px 22px,
+  linear-gradient(90deg,rgba(255,255,255,.06) 1px,transparent 1px) 0 0/22px 22px;border-radius:8px;transform:translateZ(-1px)}
+.bd{position:absolute;transform-style:preserve-3d}
+.bd .t,.bd .f,.bd .s{position:absolute;backface-visibility:hidden}
+.bd .t{inset:0;transform:translateZ(var(--h));background:#3b4290}
+.bd .f{left:0;top:100%;width:100%;height:var(--h);transform-origin:top;transform:rotateX(90deg);
+  background:repeating-linear-gradient(0deg,transparent 0 9px,rgba(255,214,102,.55) 9px 12px),linear-gradient(#252a5e,#1a1e47)}
+.bd .s{top:0;left:100%;height:100%;width:var(--h);transform-origin:left;transform:rotateY(-90deg);
+  background:repeating-linear-gradient(90deg,transparent 0 9px,rgba(255,214,102,.35) 9px 12px),linear-gradient(90deg,#1d2150,#121536)}
+.bd.hl .t{background:var(--taxi)}
+.bd.hl .f{background:repeating-linear-gradient(0deg,transparent 0 9px,rgba(255,255,255,.75) 9px 12px),linear-gradient(#ffcf47,#e6a800)}
+.bd.hl .s{background:repeating-linear-gradient(90deg,transparent 0 9px,rgba(255,255,255,.5) 9px 12px),linear-gradient(90deg,#d99a00,#a87600)}
+
+/* ---------- MARQUEE ---------- */
+.marquee{background:var(--taxi);color:var(--taxi-ink);overflow:hidden;white-space:nowrap;padding:18px 0;border-top:1px solid #0002;border-bottom:1px solid #0002}
+.marquee .track{display:inline-flex;gap:40px;animation:mq 38s linear infinite;font-weight:700;font-size:clamp(22px,3vw,34px);letter-spacing:-.02em}
+.marquee .track span:nth-child(odd){font-family:"Instrument Serif",serif;font-style:italic;font-weight:400}
+@keyframes mq{to{transform:translateX(-50%)}}
+
+/* ---------- SECTIONS ---------- */
+section.s{padding:110px 0 40px;position:relative}
+.eyebrow{font-size:12px;letter-spacing:.28em;font-weight:700;color:var(--brick);text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:10px}
+.eyebrow::before{content:"";width:28px;height:2px;background:currentColor}
+h2.big{margin:0 0 18px;font-size:clamp(44px,8vw,108px);line-height:.92;letter-spacing:-.05em;font-weight:700}
+h2.big .serif{color:var(--brick);font-size:1.02em;letter-spacing:-.02em}
+.lead{color:var(--muted);max-width:620px;font-size:18px;margin:0 0 26px}
+.w{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.08em;margin-bottom:-.08em}
+.w>span{display:inline-block}
+
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);border-radius:var(--radius);overflow:hidden;margin-top:10px}
+@media(min-width:800px){.stats{grid-template-columns:repeat(4,1fr)}}
+.stat{background:var(--paper);padding:26px 20px}
+.stat b{display:block;font-size:clamp(46px,6vw,78px);line-height:1;letter-spacing:-.05em;font-variant-numeric:tabular-nums}
+.stat span{color:var(--muted);font-size:14px}
+
+/* day tickets */
+.days{display:flex;gap:12px;overflow-x:auto;padding:24px 4px 30px;margin:0 -4px;scroll-snap-type:x mandatory;perspective:900px;scrollbar-width:none}
+.days::-webkit-scrollbar{display:none}
+.tk{flex:0 0 auto;scroll-snap-align:start;width:150px;border:0;cursor:pointer;text-align:left;border-radius:18px;padding:16px;background:var(--card);color:var(--ink);box-shadow:0 1px 0 var(--line),0 10px 30px -18px rgba(11,14,31,.4);transition:transform .45s cubic-bezier(.2,.8,.2,1),background .35s,color .35s;position:relative;font:inherit;transform-style:preserve-3d}
+.tk::after{content:"";position:absolute;left:12px;right:12px;bottom:46px;border-top:2px dashed var(--line)}
+.tk small{display:block;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-weight:700}
+.tk b{display:block;font-size:44px;line-height:1.05;letter-spacing:-.04em;margin:2px 0 18px}
+.tk span{font-size:13px;color:var(--muted);display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tk:hover{transform:translateY(-6px) rotateX(8deg)}
+.tk.on{background:var(--night);color:#fff;transform:translateY(-8px)}
+.tk.on small,.tk.on span{color:rgba(255,255,255,.7)}
+.tk.on b{color:var(--taxi)}
+.tk.on::after{border-color:rgba(255,255,255,.2)}
+
+.dayhead{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:12px;margin:6px 0 18px}
+.dayhead h3{margin:0;font-size:clamp(30px,4.6vw,56px);letter-spacing:-.04em;line-height:1}
+.dayhead .tot{font-size:14px;color:var(--muted);background:var(--card);padding:8px 14px;border-radius:999px;border:1px solid var(--line)}
+
+/* timeline cards */
+.tl{position:relative;padding-left:0}
+@media(min-width:800px){.tl{padding-left:120px}.tl::before{content:"";position:absolute;left:96px;top:10px;bottom:10px;width:2px;background:linear-gradient(var(--brick),transparent)}}
+.card{position:relative;background:var(--card);border-radius:var(--radius);padding:20px 22px;margin:0 0 14px;border:1px solid var(--line);transform-style:preserve-3d;transition:box-shadow .4s;will-change:transform}
+.card:hover{box-shadow:0 30px 60px -30px rgba(11,14,31,.45)}
+.card.opt{border-style:dashed;background:transparent}
+.card .time{font-weight:700;font-variant-numeric:tabular-nums;color:var(--brick);font-size:15px;margin-bottom:4px}
+@media(min-width:800px){.card .time{position:absolute;left:-120px;top:22px;width:80px;text-align:right;font-size:20px;letter-spacing:-.02em}
+  .card::before{content:"";position:absolute;left:-30px;top:30px;width:12px;height:12px;border-radius:50%;background:var(--paper);border:3px solid var(--brick)}}
+.card .title{font-weight:700;font-size:21px;letter-spacing:-.02em;line-height:1.2;transform:translateZ(30px)}
+.card .place{color:var(--muted);font-size:14px;margin-top:2px}
+.card .notes{margin:10px 0 0;font-size:15px}
+.badges{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.b{font-size:12px;padding:4px 10px;border-radius:999px;font-weight:700}
+.b.res{background:var(--res-soft);color:var(--res)}
 .b.ok{background:var(--ok-soft);color:var(--ok)}
 .b.pc{background:var(--warn-soft);color:var(--warn)}
 .b.opt{background:var(--opt-soft);color:var(--opt)}
-.b.cost{background:var(--bg);color:var(--muted);border:1px solid var(--line)}
-.links{display:flex;flex-wrap:wrap;gap:12px;margin-top:10px;font-size:13px}
-.links a{text-decoration:none;font-weight:600}
-#map{height:460px;border-radius:16px;border:1px solid var(--line);margin-top:12px}
-.legend{color:var(--muted);font-size:13px;margin-top:8px}
-.res-row{display:flex;gap:12px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin:8px 0}
-.res-row input{width:20px;height:20px;margin-top:2px;accent-color:var(--ok);flex:0 0 auto}
+.b.cost{border:1px solid var(--line);color:var(--muted)}
+.links{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.links a{font-size:13px;font-weight:600;text-decoration:none;padding:8px 12px;border-radius:999px;background:var(--paper-2);transition:background .25s,color .25s,transform .25s}
+.links a:hover{background:var(--night);color:#fff;transform:translateY(-2px)}
+
+/* map */
+#map .osm{filter:grayscale(.85) contrast(.95) brightness(1.04)}
+#map{height:520px;border-radius:var(--radius);border:1px solid var(--line);overflow:hidden;z-index:1}
+@media(max-width:700px){#map{height:420px}}
+.mapdays{display:flex;gap:8px;overflow-x:auto;padding:4px 0 16px;scrollbar-width:none}
+.mapdays button{flex:0 0 auto;border:1px solid var(--line);background:var(--card);color:var(--ink);padding:9px 14px;border-radius:999px;font:600 14px "DM Sans",sans-serif;cursor:pointer;transition:all .25s}
+.mapdays button.on{background:var(--night);color:#fff;border-color:var(--night)}
+.legend{color:var(--muted);font-size:13px;margin-top:10px}
+.pin{width:28px;height:28px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);display:flex;align-items:center;justify-content:center;border:2px solid #fff;box-shadow:0 4px 10px #0005}
+.pin span{transform:rotate(45deg);color:#fff;font:700 12px "DM Sans",sans-serif}
+
+/* reservas */
+.resgrid{display:grid;gap:12px}
+@media(min-width:800px){.resgrid{grid-template-columns:1fr 1fr}}
+.ring{display:flex;align-items:center;gap:20px;margin-bottom:24px}
+.ring svg{width:110px;height:110px;transform:rotate(-90deg)}
+.ring circle{fill:none;stroke-width:10}
+.ring .bg{stroke:var(--line)}
+.ring .fg{stroke:var(--ok);stroke-linecap:round;transition:stroke-dashoffset 1s cubic-bezier(.2,.8,.2,1)}
+.ring b{font-size:44px;letter-spacing:-.04em;display:block;line-height:1}
+.res-row{display:flex;gap:14px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;cursor:pointer;transition:transform .3s,box-shadow .3s}
+.res-row:hover{transform:translateY(-3px);box-shadow:0 16px 40px -24px rgba(11,14,31,.5)}
+.res-row input{appearance:none;-webkit-appearance:none;width:26px;height:26px;border-radius:8px;border:2px solid var(--line);flex:0 0 auto;margin:0;display:grid;place-items:center;transition:all .25s;cursor:pointer}
+.res-row input:checked{background:var(--ok);border-color:var(--ok)}
+.res-row input:checked::after{content:"✓";color:#fff;font-weight:700;font-size:15px}
 .res-row.done .rt{text-decoration:line-through;color:var(--muted)}
-.rt{font-weight:650}
-.rm{font-size:13px;color:var(--muted)}
-.prio{font-size:11px;font-weight:700;padding:2px 7px;border-radius:999px;margin-left:6px}
-.prio.Urgente{background:var(--accent);color:#fff}
-.prio.Alta{background:var(--accent-soft);color:var(--accent)}
+.rt{font-weight:700;font-size:16px}
+.rm{font-size:13px;color:var(--muted);margin-top:2px}
+.rm a{color:var(--brick);font-weight:700;text-decoration:none}
+.prio{font-size:11px;font-weight:700;padding:3px 8px;border-radius:999px;margin-left:8px;vertical-align:2px}
+.prio.Urgente{background:var(--brick);color:#fff}
+.prio.Alta{background:var(--res-soft);color:var(--res)}
 .prio.Media{background:var(--warn-soft);color:var(--warn)}
-.prio.Baja{background:var(--bg);color:var(--muted);border:1px solid var(--line)}
-.progress{height:8px;background:var(--line);border-radius:99px;overflow:hidden;margin:10px 0 4px}
-.progress i{display:block;height:100%;background:var(--ok);width:0}
-table{width:100%;border-collapse:collapse;background:var(--card);border-radius:14px;overflow:hidden;border:1px solid var(--line)}
-th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--line);font-size:14px}
-td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
-tfoot td{font-weight:700}
-.bar{height:6px;background:var(--accent);border-radius:99px}
-.tips{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:10px;margin-top:12px}
-.tip{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px}
-.tip h3{margin:0 0 6px;font-size:15px}
-.tip p{margin:0;font-size:14px;color:var(--muted)}
-.note{background:var(--warn-soft);color:var(--ink);border-radius:12px;padding:10px 12px;font-size:13px;margin-top:12px}
-label.chk{display:inline-flex;gap:6px;align-items:center;font-size:14px;margin:10px 0;color:var(--muted)}
-footer{margin-top:30px;color:var(--muted);font-size:13px;border-top:1px solid var(--line);padding-top:14px}
+.prio.Baja{border:1px solid var(--line);color:var(--muted)}
+
+/* presupuesto */
+.budget{background:var(--night);color:#fff;border-radius:28px;padding:30px 22px;overflow:hidden;position:relative}
+@media(min-width:800px){.budget{padding:44px}}
+.budget .total{font-size:clamp(64px,11vw,150px);font-weight:700;letter-spacing:-.06em;line-height:.9;color:var(--taxi);font-variant-numeric:tabular-nums}
+.budget .total small{font-size:.22em;letter-spacing:0;color:rgba(255,255,255,.6);font-weight:500;margin-left:10px}
+.brow{display:grid;grid-template-columns:110px 1fr 70px;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.1);font-size:14px}
+.brow .bar{height:10px;border-radius:99px;background:rgba(255,255,255,.1);overflow:hidden}
+.brow .bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--brick),var(--taxi));border-radius:99px;transition:width 1.1s cubic-bezier(.2,.8,.2,1)}
+.brow .n{text-align:right;font-variant-numeric:tabular-nums;font-weight:700}
+.toggle{display:inline-flex;align-items:center;gap:10px;margin:18px 0 8px;cursor:pointer;font-size:14px;color:rgba(255,255,255,.75)}
+.toggle input{appearance:none;-webkit-appearance:none;width:42px;height:24px;border-radius:99px;background:rgba(255,255,255,.2);position:relative;cursor:pointer;transition:background .25s;margin:0}
+.toggle input::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:transform .25s}
+.toggle input:checked{background:var(--taxi)}
+.toggle input:checked::after{transform:translateX(18px)}
+.bnote{margin-top:22px;font-size:13px;color:rgba(255,255,255,.65);max-width:720px}
+
+/* tips flip cards */
+.tips{display:grid;gap:14px;grid-template-columns:1fr}
+@media(min-width:640px){.tips{grid-template-columns:1fr 1fr}}
+@media(min-width:1000px){.tips{grid-template-columns:repeat(4,1fr)}}
+.flip{perspective:1100px;height:230px;cursor:pointer}
+.flip .in{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .8s cubic-bezier(.2,.8,.2,1)}
+.flip:hover .in,.flip.f .in{transform:rotateY(180deg)}
+.flip .fa,.flip .ba{position:absolute;inset:0;border-radius:var(--radius);padding:22px;backface-visibility:hidden;-webkit-backface-visibility:hidden;display:flex;flex-direction:column;justify-content:space-between}
+.flip .fa{background:var(--card);border:1px solid var(--line)}
+.flip .fa .ic{font-size:44px}
+.flip .fa h4{margin:0;font-size:24px;letter-spacing:-.03em;line-height:1.1}
+.flip .fa small{color:var(--muted);font-size:12px}
+.flip .ba{background:var(--night);color:#fff;transform:rotateY(180deg);font-size:15px;line-height:1.5}
+.flip:nth-child(4n+2) .ba{background:var(--brick)}
+.flip:nth-child(4n+3) .ba{background:#2b3ab8}
+.flip:nth-child(4n+4) .ba{background:var(--taxi);color:var(--taxi-ink)}
+
+/* footer */
+footer{background:var(--night);color:#fff;margin-top:110px;padding:90px 0 30px;overflow:hidden}
+footer .huge{font-size:clamp(60px,15vw,230px);font-weight:700;letter-spacing:-.06em;line-height:.85;margin:0}
+footer .huge .y{color:var(--taxi)}
+footer .cols{display:flex;flex-wrap:wrap;justify-content:space-between;gap:20px;margin-top:40px;color:rgba(255,255,255,.65);font-size:14px}
+footer a{color:var(--taxi)}
+
+.err{background:var(--res-soft);color:var(--res);padding:14px;border-radius:14px;margin:20px 0}
 .hidden{display:none}
-.err{background:var(--accent-soft);color:var(--accent);padding:12px;border-radius:12px;margin-top:14px}
+
+/* cursor */
+.cursor{position:fixed;left:0;top:0;width:14px;height:14px;border-radius:50%;background:var(--taxi);mix-blend-mode:difference;pointer-events:none;z-index:9000;transform:translate(-50%,-50%);transition:width .3s,height .3s;display:none}
+@media(pointer:fine){.cursor{display:block}}
+.cursor.big{width:56px;height:56px}
+
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+}
 </style>
 </head>
-<body>
-<div class="wrap">
-  <header>
-    <h1>🗽 Nueva York · 21–28 nov 2026</h1>
-    <div class="sub">3 parceros · SpringHill Suites Chelsea · Cumpleaños, Thanksgiving y Black Friday</div>
-    <span class="count" id="count"></span>
-  </header>
+<body class="loading">
 
-  <nav class="tabs" id="tabs">
-    <button data-v="itin" class="on">📅 Itinerario</button>
-    <button data-v="mapa">🗺️ Mapa</button>
-    <button data-v="res">✅ Reservas</button>
-    <button data-v="pres">💵 Presupuesto</button>
-    <button data-v="tips">💡 Tips</button>
-  </nav>
-
-  <div id="err" class="err hidden"></div>
-
-  <section id="v-itin">
-    <div class="days" id="days"></div>
-    <div class="dayhead"><h2 id="dayTitle"></h2><span class="tot" id="dayTot"></span></div>
-    <div id="cards"></div>
-  </section>
-
-  <section id="v-mapa" class="hidden">
-    <div class="days" id="daysMap"></div>
-    <div id="map"></div>
-    <div class="legend">⭐ Hotel · Los números siguen el orden del día · Línea punteada = recorrido aproximado (no es la ruta real del metro)</div>
-  </section>
-
-  <section id="v-res" class="hidden">
-    <p class="sub">Marquen lo que ya reservaron. <b>Ojo:</b> lo que marquen queda guardado solo en <i>su</i> celular o navegador. Para que todos lo vean, cambien el estado en el CSV o díganme a mí.</p>
-    <div class="progress"><i id="prog"></i></div>
-    <div class="rm" id="progTxt"></div>
-    <div id="resList"></div>
-  </section>
-
-  <section id="v-pres" class="hidden">
-    <p class="sub">Costos <b>estimados por persona en USD</b>, sin vuelos, hotel, compras, transporte diario ni comidas sueltas. Son referencias para planear: confirmen los precios al reservar.</p>
-    <label class="chk"><input type="checkbox" id="incOpt"> Incluir planes opcionales</label>
-    <table>
-      <thead><tr><th>Día</th><th></th><th class="n">USD / persona</th></tr></thead>
-      <tbody id="presBody"></tbody>
-      <tfoot><tr><td>Total</td><td></td><td class="n" id="presTot"></td></tr></tfoot>
-    </table>
-    <div class="note">Además de esto, calculen: metro (~$2.90 por viaje; con la misma tarjeta, después de 12 viajes en 7 días el resto es gratis), propinas del 18–20% en restaurantes y el impuesto (~8.9%), que no viene incluido en los precios.</div>
-  </section>
-
-  <section id="v-tips" class="hidden">
-    <div class="tips">
-      <div class="tip"><h3>🚇 Metro con OMNY</h3><p>Paguen tocando el torniquete con la tarjeta débito/crédito (contactless) o Apple Pay. Cada uno con su propia tarjeta para que aplique el tope semanal.</p></div>
-      <div class="tip"><h3>🧥 Frío</h3><p>Finales de noviembre: suele estar entre 2 y 10 °C, y en la madrugada del desfile hace más frío. Ropa por capas, guantes, gorro y zapatos cómodos.</p></div>
-      <div class="tip"><h3>🦃 Thanksgiving (jue 26)</h3><p>El MET cierra ese día y probablemente el Museo de Historia Natural también. Muchos restaurantes solo atienden con reserva y menú fijo. El metro funciona con horario de festivo.</p></div>
-      <div class="tip"><h3>🎈 Desfile</h3><p>Va de ~8:30 am a mediodía. Bajen por la 6ta Av; la zona de la calle 34 frente a Macy's es para TV y no tiene acceso al público. Lleguen a las 6:00 am. Baños: casi no hay, vayan antes.</p></div>
-      <div class="tip"><h3>🍸 Bares y rooftops</h3><p>Edad mínima 21: lleven el pasaporte físico, en muchos sitios no les aceptan la cédula.</p></div>
-      <div class="tip"><h3>🛍️ Black Friday</h3><p>Las tiendas abren muy temprano y se llenan. Revisen si les devuelven impuestos (en NY normalmente no hay devolución para turistas).</p></div>
-      <div class="tip"><h3>🌃 Regreso tarde</h3><p>El metro funciona 24 h, pero de noche pasa menos seguido. Pasada la medianoche, mejor Uber entre los 3.</p></div>
-      <div class="tip"><h3>✈️ Sábado 28</h3><p>Salgan del hotel a las 4:45 am. Pidan el Uber la noche anterior (programado) y dejen las maletas listas el viernes.</p></div>
+<!-- LOADER -->
+<div id="loader" aria-hidden="true">
+  <div class="cols"><i></i><i></i><i></i><i></i><i></i></div>
+  <div class="lc">
+    <div class="lt">NYC · NOV 2026</div>
+    <div>
+      <div class="big"><span id="lnum">0</span>%</div>
+      <div class="bar"><b id="lbar"></b></div>
     </div>
-  </section>
-
-  <footer>
-    ¿Quieren cambiar algo? <a id="issueGen" target="_blank" rel="noopener">Propongan un cambio</a> (abre un Issue en GitHub) o editen
-    <a id="csvLink" target="_blank" rel="noopener">data/itinerario.csv</a>.
-    Lo marcado “Por confirmar” no está verificado todavía: revisen la web oficial antes de ir.
-  </footer>
+  </div>
 </div>
 
+<div class="cursor" id="cursor"></div>
+
+<!-- NAV -->
+<div class="nav">
+  <div class="pill"><a class="logo" href="#top">NYC<span>·</span>26</a></div>
+  <div class="pill">
+    <nav class="nav-links" id="navlinks">
+      <a href="#itinerario">Itinerario</a><a href="#mapa">Mapa</a><a href="#reservas">Reservas</a><a href="#presupuesto">Presupuesto</a><a href="#tips">Tips</a>
+    </nav>
+    <button class="menu-btn" id="menuBtn" aria-label="Menú">☰</button>
+  </div>
+</div>
+<div class="mobile-menu" id="mmenu">
+  <a href="#itinerario">Itinerario</a><a href="#mapa">Mapa</a><a href="#reservas">Reservas</a><a href="#presupuesto">Presupuesto</a><a href="#tips">Tips</a>
+</div>
+
+<!-- HERO -->
+<header class="hero" id="top">
+  <div class="city" id="city"><div class="scene" id="scene"><div class="ground"></div></div></div>
+  <div class="wrap">
+    <div class="chip"><i></i><span id="count">Cargando…</span></div>
+    <h1>
+      <span class="ln"><span>Nueva</span></span>
+      <span class="ln"><span class="y">York,</span></span>
+      <span class="ln"><span class="serif">21—28 nov</span></span>
+    </h1>
+    <div class="hero-foot">
+      <p>Tres parceros, un cumpleaños, el desfile de Thanksgiving y Black Friday. Todo el plan, día por día.</p>
+      <div class="btns">
+        <a class="btn y mag" href="#itinerario">Ver itinerario →</a>
+        <a class="btn o mag" href="#reservas">Reservas</a>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-hint">SCROLL ↓</div>
+</header>
+
+<div class="marquee"><div class="track" id="mq"></div></div>
+
+<!-- STATS -->
+<section class="s" style="padding-top:80px">
+  <div class="wrap">
+    <div class="eyebrow">El viaje en números</div>
+    <div class="stats">
+      <div class="stat"><b data-count="7">0</b><span>noches en Chelsea</span></div>
+      <div class="stat"><b data-count="0" id="stPlans">0</b><span>planes en el itinerario</span></div>
+      <div class="stat"><b data-count="0" id="stRes">0</b><span>reservas por hacer</span></div>
+      <div class="stat"><b data-count="3">0</b><span>parceros · 1 🎂</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div id="err" class="err hidden"></div></div>
+
+<!-- ITINERARIO -->
+<section class="s" id="itinerario">
+  <div class="wrap">
+    <div class="eyebrow">01 — Itinerario</div>
+    <h2 class="big split">Día a <span class="serif">día</span></h2>
+    <p class="lead reveal">Toca un día para ver el plan. Cada actividad trae cómo llegar, la web oficial y un botón para proponer cambios.</p>
+    <div class="days" id="days"></div>
+    <div class="dayhead"><h3 id="dayTitle"></h3><span class="tot" id="dayTot"></span></div>
+    <div class="tl" id="cards"></div>
+  </div>
+</section>
+
+<!-- MAPA -->
+<section class="s" id="mapa">
+  <div class="wrap">
+    <div class="eyebrow">02 — Mapa</div>
+    <h2 class="big split">La ciudad, <span class="serif">punto por punto</span></h2>
+    <div class="mapdays" id="mapdays"></div>
+    <div id="map" class="reveal"></div>
+    <div class="legend">⭐ Hotel · Los números siguen el orden del día · La línea punteada es el orden de las paradas, no la ruta real del metro.</div>
+  </div>
+</section>
+
+<!-- RESERVAS -->
+<section class="s" id="reservas">
+  <div class="wrap">
+    <div class="eyebrow">03 — Reservas</div>
+    <h2 class="big split">Lo que hay que <span class="serif">amarrar</span></h2>
+    <p class="lead reveal">Lo que marquen queda guardado solo en su celular o navegador. Para que todos lo vean, cambien el estado en el CSV o díganme.</p>
+    <div class="ring reveal">
+      <svg viewBox="0 0 120 120"><circle class="bg" cx="60" cy="60" r="50"/><circle class="fg" id="ringFg" cx="60" cy="60" r="50" stroke-dasharray="314.16" stroke-dashoffset="314.16"/></svg>
+      <div><b id="ringTxt">0/0</b><span class="rm">reservas hechas (en este dispositivo)</span></div>
+    </div>
+    <div class="resgrid" id="resList"></div>
+  </div>
+</section>
+
+<!-- PRESUPUESTO -->
+<section class="s" id="presupuesto">
+  <div class="wrap">
+    <div class="eyebrow">04 — Presupuesto</div>
+    <h2 class="big split">¿Cuánto <span class="serif">sale?</span></h2>
+    <div class="budget reveal">
+      <div class="total">$<span id="presTot">0</span><small>USD por persona en planes</small></div>
+      <label class="toggle"><input type="checkbox" id="incOpt"> Incluir planes opcionales</label>
+      <div id="presBody"></div>
+      <div class="bnote">Son estimados: confirmen el precio al reservar. No incluye vuelos, hotel, compras, metro (~$2.90 por viaje; con la misma tarjeta, después de 12 viajes en 7 días el resto es gratis) ni comidas sueltas. En restaurantes sumen propina del 18–20% y el impuesto (~8.9%).</div>
+    </div>
+  </div>
+</section>
+
+<!-- TIPS -->
+<section class="s" id="tips">
+  <div class="wrap">
+    <div class="eyebrow">05 — Tips</div>
+    <h2 class="big split">Para no <span class="serif">sufrir</span></h2>
+    <p class="lead reveal">Pasa el mouse o toca cada tarjeta.</p>
+    <div class="tips" id="tipsGrid"></div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p class="huge split-f">See you<br>in <span class="y">NYC.</span></p>
+    <div class="cols">
+      <div>¿Cambiar algo? <a id="issueGen" target="_blank" rel="noopener">Proponer cambio</a> · <a id="csvLink" target="_blank" rel="noopener">Editar el CSV</a></div>
+      <div>Lo marcado "Por confirmar" no está verificado: revisen la web oficial antes de ir.</div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script>
-const REPO = "jacoal1234-creator/nyc-trip-2026";
-const HOTEL = {lat:40.7466, lon:-73.9928};
-const TRIP_START = new Date(2026, 10, 21, 16, 30);
-const DAY_TAGS = {"2026-11-21":"✈️ Llegada","2026-11-22":"Chelsea · SoHo","2026-11-23":"🎂 Cumpleaños","2026-11-24":"Estatua · Brooklyn","2026-11-25":"Museos · Globos","2026-11-26":"🦃 Desfile","2026-11-27":"🛍️ Black Friday","2026-11-28":"✈️ Regreso"};
-const WD = ["Dom","Lun","Mar","Mié","Jue","Vie","Sáb"];
-const WDL = ["Domingo","Lunes","Martes","Miércoles","Jueves","Viernes","Sábado"];
+const REPO="jacoal1234-creator/nyc-trip-2026";
+const HOTEL={lat:40.7466,lon:-73.9928};
+const TRIP_START=new Date(2026,10,21,16,30);
+const DAY_TAGS={"2026-11-21":"✈️ Llegada","2026-11-22":"Chelsea · SoHo","2026-11-23":"🎂 Cumpleaños","2026-11-24":"Estatua · Brooklyn","2026-11-25":"Museos · Globos","2026-11-26":"🦃 Desfile","2026-11-27":"🛍️ Black Friday","2026-11-28":"✈️ Regreso"};
+const WD=["Dom","Lun","Mar","Mié","Jue","Vie","Sáb"], WDL=["Domingo","Lunes","Martes","Miércoles","Jueves","Viernes","Sábado"];
+const TIPS=[
+ ["🚇","Metro con OMNY","Paguen tocando el torniquete con la tarjeta contactless o Apple Pay. Cada uno con su propia tarjeta para que aplique el tope semanal."],
+ ["🧥","Frío","Finales de noviembre: suele estar entre 2 y 10 °C, y en la madrugada del desfile hace más frío. Capas, guantes, gorro y zapatos cómodos."],
+ ["🦃","Thanksgiving","El MET cierra el jueves 26 y probablemente el Museo de Historia Natural también. Muchos restaurantes solo atienden con reserva y menú fijo."],
+ ["🎈","Desfile","De ~8:30 am a mediodía. Véanlo en la 6ta Av; frente a Macy's (calle 34) es zona de TV, sin acceso al público. Lleguen a las 6:00 y vayan al baño antes."],
+ ["🍸","Bares y rooftops","Edad mínima 21. Lleven el pasaporte físico: en muchos sitios no aceptan la cédula extranjera."],
+ ["🛍️","Black Friday","Las tiendas abren muy temprano y se llenan. En NY normalmente no devuelven impuestos a turistas."],
+ ["🌃","Regreso tarde","El metro funciona 24 h, pero de noche pasa menos seguido. Pasada la medianoche, mejor Uber entre los 3."],
+ ["✈️","Sábado 28","Salgan del hotel a las 4:45 am. Programen el Uber la noche anterior y dejen las maletas listas el viernes."]
+];
+const RM=matchMedia("(prefers-reduced-motion: reduce)").matches;
+const FINE=matchMedia("(pointer:fine)").matches;
 
-function parseCSV(txt){
-  const rows=[];let row=[],f="",q=false;
-  for(let i=0;i<txt.length;i++){
-    const c=txt[i];
-    if(q){ if(c=='"'){ if(txt[i+1]=='"'){f+='"';i++;} else q=false; } else f+=c; }
-    else if(c=='"') q=true;
-    else if(c==','){row.push(f);f="";}
-    else if(c=='\n'||c=='\r'){ if(c=='\r'&&txt[i+1]=='\n')i++; row.push(f);f=""; if(row.some(x=>x!==""))rows.push(row); row=[]; }
-    else f+=c;
-  }
-  if(f!==""||row.length){row.push(f); if(row.some(x=>x!==""))rows.push(row);}
-  const h=rows.shift();
-  return rows.map(r=>Object.fromEntries(h.map((k,i)=>[k.trim(),(r[i]??"").trim()])));
-}
+/* ---------- utils ---------- */
+function parseCSV(txt){const rows=[];let row=[],f="",q=false;for(let i=0;i<txt.length;i++){const c=txt[i];if(q){if(c=='"'){if(txt[i+1]=='"'){f+='"';i++;}else q=false;}else f+=c;}else if(c=='"')q=true;else if(c==','){row.push(f);f="";}else if(c=='\n'||c=='\r'){if(c=='\r'&&txt[i+1]=='\n')i++;row.push(f);f="";if(row.some(x=>x!==""))rows.push(row);row=[];}else f+=c;}if(f!==""||row.length){row.push(f);if(row.some(x=>x!==""))rows.push(row);}const h=rows.shift();return rows.map(r=>Object.fromEntries(h.map((k,i)=>[k.trim(),(r[i]??"").trim()])));}
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-const dParts=s=>{const [y,m,d]=s.split("-").map(Number);return new Date(y,m-1,d);};
+const dParts=s=>{const[y,m,d]=s.split("-").map(Number);return new Date(y,m-1,d);};
 const store={get(k,d){try{return JSON.parse(localStorage.getItem(k))??d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+const issueURL=(t,b)=>`https://github.com/${REPO}/issues/new?title=${encodeURIComponent(t)}&body=${encodeURIComponent(b)}`;
+const dayLabel=d=>{const dt=dParts(d);return `${WDL[dt.getDay()]} ${dt.getDate()} nov`;};
 
-let ACT=[],RES=[],DAYS=[],curDay=store.get("nyc_day",null),map,layer;
-
-function issueURL(title,body){
-  return `https://github.com/${REPO}/issues/new?title=${encodeURIComponent(title)}&body=${encodeURIComponent(body)}`;
+/* scramble text */
+const GLYPHS="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#*+";
+function scramble(el,dur=600){
+  if(RM||el._scr)return;const final=el.dataset.text||el.textContent;el.dataset.text=final;el._scr=true;
+  const t0=performance.now();
+  (function tick(now){const p=Math.min(1,(now-t0)/dur);const n=Math.floor(p*final.length);
+    el.textContent=final.slice(0,n)+[...final.slice(n)].map(c=>c===" "?" ":GLYPHS[Math.random()*GLYPHS.length|0]).join("");
+    if(p<1)requestAnimationFrame(tick);else{el.textContent=final;el._scr=false;}})(t0);
 }
-function badgeFor(a){
-  let h="";
-  if(a.opcional==="si") h+=`<span class="b opt">Opcional</span>`;
-  if(a.estado==="Confirmado") h+=`<span class="b ok">Confirmado</span>`;
-  else if(a.estado==="Por reservar") h+=`<span class="b res">Por reservar</span>`;
-  else h+=`<span class="b pc">Por confirmar</span>`;
-  if(+a.costo_usd_pp>0) h+=`<span class="b cost">~$${a.costo_usd_pp} c/u</span>`;
-  else h+=`<span class="b cost">Gratis / variable</span>`;
-  return h;
-}
-function dayLabel(d){const dt=dParts(d);return `${WDL[dt.getDay()]} ${dt.getDate()} nov`;}
-function dayCost(d,inc){return ACT.filter(a=>a.fecha===d&&(inc||a.opcional!=="si")).reduce((s,a)=>s+(+a.costo_usd_pp||0),0);}
 
-function renderDayChips(el,onPick,withAll){
-  el.innerHTML=(withAll?`<button class="day ${curDay==="all"?"on":""}" data-d="all"><b>★</b><span>Todos</span></button>`:"")+
-    DAYS.map(d=>{const dt=dParts(d);return `<button class="day ${d===curDay?"on":""}" data-d="${d}"><b>${WD[dt.getDay()]} ${dt.getDate()}</b><span>${esc(DAY_TAGS[d]||"")}</span></button>`}).join("");
-  el.querySelectorAll(".day").forEach(b=>b.onclick=()=>onPick(b.dataset.d));
+/* split words for headline reveals */
+function splitWords(el){
+  const walk=n=>{[...n.childNodes].forEach(ch=>{
+    if(ch.nodeType===3){const frag=document.createDocumentFragment();ch.textContent.split(/(\s+)/).forEach(p=>{if(!p)return;if(/^\s+$/.test(p)){frag.appendChild(document.createTextNode(p));return;}const w=document.createElement("span");w.className="w";w.innerHTML=`<span>${esc(p)}</span>`;frag.appendChild(w);});ch.replaceWith(frag);}
+    else if(ch.nodeType===1&&ch.tagName!=="BR")walk(ch);});};
+  walk(el);
 }
-function pickDay(d){curDay=d;store.set("nyc_day",d);renderItin();if(map)renderMap();}
 
-function renderItin(){
-  const d=curDay==="all"||!DAYS.includes(curDay)?DAYS[0]:curDay;
-  renderDayChips(document.getElementById("days"),pickDay,false);
-  document.querySelectorAll("#days .day").forEach(b=>b.classList.toggle("on",b.dataset.d===d));
-  document.getElementById("dayTitle").textContent=`${dayLabel(d)} · ${DAY_TAGS[d]||""}`;
+/* ---------- 3D skyline ---------- */
+function buildCity(){
+  const scene=document.getElementById("scene");
+  let s=7;const rnd=()=>(s=(s*9301+49297)%233280)/233280;
+  const G=8,cell=55;
+  for(let i=0;i<G;i++)for(let j=0;j<G;j++){
+    if(rnd()<.22)continue;
+    const w=26+rnd()*18,d=26+rnd()*18,dist=Math.hypot(i-G/2,j-G/2);
+    let h=30+rnd()*120*(1.25-dist/G);const hl=(i===3&&j===4);if(hl)h=290;
+    const b=document.createElement("div");b.className="bd"+(hl?" hl":"");
+    b.style.cssText=`left:${i*cell+(cell-w)/2}px;top:${j*cell+(cell-d)/2}px;width:${w}px;height:${d}px;--h:${h.toFixed(0)}px`;
+    b.innerHTML='<div class="t"></div><div class="f"></div><div class="s"></div>';
+    b.dataset.h=h;scene.appendChild(b);
+  }
+}
+
+/* ---------- state ---------- */
+let ACT=[],RES=[],DAYS=[],curDay=store.get("nyc_day",null),mapDay="all",map,layer;
+
+function badgeFor(a){let h="";
+  if(a.opcional==="si")h+=`<span class="b opt">Opcional</span>`;
+  h+=a.estado==="Confirmado"?`<span class="b ok">Confirmado</span>`:a.estado==="Por reservar"?`<span class="b res">Por reservar</span>`:`<span class="b pc">Por confirmar</span>`;
+  h+=+a.costo_usd_pp>0?`<span class="b cost">~$${a.costo_usd_pp} c/u</span>`:`<span class="b cost">Gratis / variable</span>`;return h;}
+const dayCost=(d,inc)=>ACT.filter(a=>a.fecha===d&&(inc||a.opcional!=="si")).reduce((s,a)=>s+(+a.costo_usd_pp||0),0);
+
+function renderDays(){
+  const el=document.getElementById("days");
+  el.innerHTML=DAYS.map(d=>{const dt=dParts(d);return `<button class="tk ${d===curDay?"on":""}" data-d="${d}"><small>${WD[dt.getDay()]}</small><b>${dt.getDate()}</b><span>${esc(DAY_TAGS[d]||"")}</span></button>`;}).join("");
+  el.querySelectorAll(".tk").forEach(b=>b.onclick=()=>{curDay=b.dataset.d;store.set("nyc_day",curDay);el.querySelectorAll(".tk").forEach(x=>x.classList.toggle("on",x===b));renderItin(true);});
+}
+function renderItin(animate){
+  const d=curDay;
+  const t=document.getElementById("dayTitle");t.textContent=`${dayLabel(d)} · ${DAY_TAGS[d]||""}`;t.dataset.text=t.textContent;
   document.getElementById("dayTot").textContent=`~$${dayCost(d,false)} por persona en planes`;
-  document.getElementById("cards").innerHTML=ACT.filter(a=>a.fecha===d).map(a=>{
+  const box=document.getElementById("cards");
+  box.innerHTML=ACT.filter(a=>a.fecha===d).map(a=>{
     const dir=`https://www.google.com/maps/dir/?api=1&destination=${a.lat},${a.lon}&travelmode=transit`;
     const iss=issueURL(`Cambio: ${a.actividad} (${dayLabel(a.fecha)})`,`Actividad #${a.id}: ${a.actividad}\nHora actual: ${a.hora}\n\n¿Qué quieres cambiar?\n- `);
-    return `<div class="card ${a.opcional==="si"?"opt":""}">
+    return `<article class="card ${a.opcional==="si"?"opt":""}">
       <div class="time">${esc(a.hora)}</div>
-      <div>
-        <div class="title">${esc(a.actividad)}</div>
-        <div class="place">📍 ${esc(a.lugar)} · ${esc(a.barrio)}</div>
-        ${a.notas?`<p class="notes">${esc(a.notas)}</p>`:""}
-        <div class="badges">${badgeFor(a)}</div>
-        <div class="links">
-          <a href="${dir}" target="_blank" rel="noopener">🧭 Cómo llegar</a>
-          ${a.link?`<a href="${esc(a.link)}" target="_blank" rel="noopener">🔗 Web oficial</a>`:""}
-          <a href="${iss}" target="_blank" rel="noopener">✏️ Proponer cambio</a>
-        </div>
-      </div></div>`;
-  }).join("");
+      <div class="title">${esc(a.actividad)}</div>
+      <div class="place">📍 ${esc(a.lugar)} · ${esc(a.barrio)}</div>
+      ${a.notas?`<p class="notes">${esc(a.notas)}</p>`:""}
+      <div class="badges">${badgeFor(a)}</div>
+      <div class="links"><a href="${dir}" target="_blank" rel="noopener">🧭 Cómo llegar</a>${a.link?`<a href="${esc(a.link)}" target="_blank" rel="noopener">🔗 Web oficial</a>`:""}<a href="${iss}" target="_blank" rel="noopener">✏️ Proponer cambio</a></div>
+    </article>`;}).join("");
+  const cards=[...box.children];
+  cards.forEach(c=>{tilt(c,6);const tt=c.querySelector(".title");c.addEventListener("mouseenter",()=>scramble(tt,450));});
+  if(animate&&!RM){scramble(t,500);gsap.fromTo(cards,{y:60,opacity:0,rotateX:-25,transformPerspective:900,transformOrigin:"50% 0%"},{y:0,opacity:1,rotateX:0,duration:.8,ease:"power3.out",stagger:.07,clearProps:"transform,opacity"});}
+  if(window.ScrollTrigger)ScrollTrigger.refresh();
 }
 
+/* 3D tilt */
+function tilt(el,max=8){
+  if(!FINE||RM)return;
+  el.addEventListener("pointermove",e=>{const r=el.getBoundingClientRect();const x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;
+    el.style.transform=`perspective(900px) rotateX(${(-y*max).toFixed(2)}deg) rotateY(${(x*max).toFixed(2)}deg) translateZ(0)`;});
+  el.addEventListener("pointerleave",()=>{el.style.transition="transform .6s cubic-bezier(.2,.8,.2,1)";el.style.transform="";setTimeout(()=>el.style.transition="",600);});
+}
+
+/* ---------- map ---------- */
+function renderMapDays(){
+  const el=document.getElementById("mapdays");
+  el.innerHTML=`<button data-d="all" class="${mapDay==="all"?"on":""}">Todo el viaje</button>`+DAYS.map(d=>{const dt=dParts(d);return `<button data-d="${d}" class="${d===mapDay?"on":""}">${WD[dt.getDay()]} ${dt.getDate()}</button>`;}).join("");
+  el.querySelectorAll("button").forEach(b=>b.onclick=()=>{mapDay=b.dataset.d;el.querySelectorAll("button").forEach(x=>x.classList.toggle("on",x===b));renderMap();});
+}
 function renderMap(){
-  renderDayChips(document.getElementById("daysMap"),pickDay,true);
-  if(!map){
-    map=L.map("map");
-    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:"© OpenStreetMap"}).addTo(map);
-  }
-  if(layer) layer.remove();
-  layer=L.layerGroup().addTo(map);
-  const list=(curDay==="all"?ACT:ACT.filter(a=>a.fecha===curDay)).filter(a=>a.lat&&a.lon);
-  const pts=[];
-  L.marker([HOTEL.lat,HOTEL.lon],{icon:L.divIcon({className:"",html:'<div style="font-size:22px">⭐</div>',iconSize:[24,24],iconAnchor:[12,12]})}).bindPopup("<b>Hotel</b><br>SpringHill Suites, 140 W 28th St").addTo(layer);
-  list.forEach((a,i)=>{
-    const ll=[+a.lat,+a.lon];pts.push(ll);
-    const col=a.opcional==="si"?"#5a5aa8":"#d6452b";
-    L.marker(ll,{icon:L.divIcon({className:"",html:`<div style="background:${col};color:#fff;border-radius:50%;width:24px;height:24px;display:flex;align-items:center;justify-content:center;font:700 12px sans-serif;border:2px solid #fff;box-shadow:0 1px 3px #0005">${curDay==="all"?"•":i+1}</div>`,iconSize:[24,24],iconAnchor:[12,12]})})
-      .bindPopup(`<b>${esc(a.hora)} · ${esc(a.actividad)}</b><br>${esc(a.lugar)}<br><small>${dayLabel(a.fecha)}</small>`).addTo(layer);
-  });
-  if(curDay!=="all"&&pts.length>1) L.polyline(pts,{color:"#d6452b",weight:2,dashArray:"5 6",opacity:.7}).addTo(layer);
-  const b=L.latLngBounds([...pts,[HOTEL.lat,HOTEL.lon]]);
-  map.invalidateSize();
-  map.fitBounds(b,{padding:[30,30],maxZoom:15});
-  setTimeout(()=>{map.invalidateSize();map.fitBounds(b,{padding:[30,30],maxZoom:15});},80);
+  if(!window.L)return;
+  if(!map){map=L.map("map",{scrollWheelZoom:false});
+    L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:'© OpenStreetMap',className:"osm"}).addTo(map);}
+  if(layer)layer.remove();layer=L.layerGroup().addTo(map);
+  const list=(mapDay==="all"?ACT:ACT.filter(a=>a.fecha===mapDay)).filter(a=>a.lat&&a.lon);const pts=[];
+  L.marker([HOTEL.lat,HOTEL.lon],{icon:L.divIcon({className:"",html:'<div style="font-size:26px;filter:drop-shadow(0 2px 3px #0006)">⭐</div>',iconSize:[28,28],iconAnchor:[14,14]})}).bindPopup("<b>Hotel</b><br>SpringHill Suites, 140 W 28th St").addTo(layer);
+  list.forEach((a,i)=>{const ll=[+a.lat,+a.lon];pts.push(ll);const col=a.opcional==="si"?"#4b4bb0":"#e2462c";
+    L.marker(ll,{icon:L.divIcon({className:"",html:`<div class="pin" style="background:${col}"><span>${mapDay==="all"?"":i+1}</span></div>`,iconSize:[28,28],iconAnchor:[14,28]})})
+     .bindPopup(`<b>${esc(a.hora)} · ${esc(a.actividad)}</b><br>${esc(a.lugar)}<br><small>${dayLabel(a.fecha)}</small>`).addTo(layer);});
+  if(mapDay!=="all"&&pts.length>1)L.polyline(pts,{color:"#e2462c",weight:2.5,dashArray:"6 8",opacity:.8}).addTo(layer);
+  const b=L.latLngBounds([...pts,[HOTEL.lat,HOTEL.lon]]);map.invalidateSize();map.fitBounds(b,{padding:[40,40],maxZoom:15});
+  setTimeout(()=>{map.invalidateSize();map.fitBounds(b,{padding:[40,40],maxZoom:15});},120);
 }
 
+/* ---------- reservas ---------- */
 function renderRes(){
-  const done=store.get("nyc_res",{});
-  const n=RES.filter(r=>done[r.id]).length;
-  document.getElementById("prog").style.width=(RES.length?n/RES.length*100:0)+"%";
-  document.getElementById("progTxt").textContent=`${n} de ${RES.length} reservas hechas (en este dispositivo)`;
+  const done=store.get("nyc_res",{}),n=RES.filter(r=>done[r.id]).length;
+  document.getElementById("ringFg").style.strokeDashoffset=314.16*(1-(RES.length?n/RES.length:0));
+  document.getElementById("ringTxt").textContent=`${n}/${RES.length}`;
   const order={Urgente:0,Alta:1,Media:2,Baja:3};
   document.getElementById("resList").innerHTML=[...RES].sort((a,b)=>order[a.prioridad]-order[b.prioridad]||a.fecha.localeCompare(b.fecha)).map(r=>`
-    <label class="res-row ${done[r.id]?"done":""}">
-      <input type="checkbox" data-id="${r.id}" ${done[r.id]?"checked":""}>
+    <label class="res-row ${done[r.id]?"done":""}"><input type="checkbox" data-id="${r.id}" ${done[r.id]?"checked":""}>
       <div><div class="rt">${esc(r.que)}<span class="prio ${esc(r.prioridad)}">${esc(r.prioridad)}</span></div>
       <div class="rm">${dayLabel(r.fecha)} · ~$${esc(r.costo_usd_pp)} c/u · ${esc(r.nota)}</div>
-      <div class="rm"><a href="${esc(r.link)}" target="_blank" rel="noopener">Reservar →</a></div></div>
-    </label>`).join("");
-  document.querySelectorAll("#resList input").forEach(c=>c.onchange=()=>{const d=store.get("nyc_res",{});d[c.dataset.id]=c.checked;store.set("nyc_res",d);renderRes();});
+      <div class="rm"><a href="${esc(r.link)}" target="_blank" rel="noopener">Reservar →</a></div></div></label>`).join("");
+  document.querySelectorAll("#resList input").forEach(c=>c.onchange=()=>{const d=store.get("nyc_res",{});d[c.dataset.id]=c.checked;store.set("nyc_res",d);
+    if(c.checked&&!RM)gsap.fromTo(c.closest(".res-row"),{scale:.97},{scale:1,duration:.5,ease:"back.out(3)"});renderRes();});
 }
 
+/* ---------- presupuesto ---------- */
+let presShown=false;
 function renderPres(){
-  const inc=document.getElementById("incOpt").checked;
-  const vals=DAYS.map(d=>dayCost(d,inc)),mx=Math.max(...vals,1);
-  document.getElementById("presBody").innerHTML=DAYS.map((d,i)=>`<tr><td>${dayLabel(d)}</td><td style="width:40%"><div class="bar" style="width:${vals[i]/mx*100}%"></div></td><td class="n">$${vals[i]}</td></tr>`).join("");
-  document.getElementById("presTot").textContent="$"+vals.reduce((a,b)=>a+b,0);
+  const inc=document.getElementById("incOpt").checked,vals=DAYS.map(d=>dayCost(d,inc)),mx=Math.max(...vals,1),tot=vals.reduce((a,b)=>a+b,0);
+  document.getElementById("presBody").innerHTML=DAYS.map((d,i)=>`<div class="brow"><span>${WD[dParts(d).getDay()]} ${dParts(d).getDate()}</span><div class="bar"><i data-w="${vals[i]/mx*100}"></i></div><span class="n">$${vals[i]}</span></div>`).join("");
+  const tEl=document.getElementById("presTot");
+  if(presShown){requestAnimationFrame(()=>document.querySelectorAll("#presBody i").forEach(i=>i.style.width=i.dataset.w+"%"));countTo(tEl,tot,.8);}
+  else tEl.dataset.target=tot;
+}
+function countTo(el,to,dur=1.4){if(RM){el.textContent=to;return;}const o={v:+el.textContent||0};gsap.to(o,{v:to,duration:dur,ease:"power2.out",onUpdate:()=>el.textContent=Math.round(o.v)});}
+
+/* ---------- misc ---------- */
+function countdown(){const ms=TRIP_START-new Date(),days=Math.ceil(ms/864e5);
+  document.getElementById("count").textContent=ms>0?`Faltan ${days} días · salimos el sáb 21`:(new Date()<new Date(2026,10,28,12)?"¡Estamos en NY! 🗽":"Viaje terminado");}
+function buildMarquee(){const words=["Pizza","Broadway","Knicks","Central Park","Friends","Macy's Parade","DUMBO","Black Friday","Rooftops","Statue of Liberty","Cumpleaños 🎂","Koreatown"];
+  const html=words.map(w=>`<span>${w}</span><span>✦</span>`).join("");document.getElementById("mq").innerHTML=html+html;}
+function buildTips(){document.getElementById("tipsGrid").innerHTML=TIPS.map(t=>`<div class="flip"><div class="in"><div class="fa"><div class="ic">${t[0]}</div><div><h4>${t[1]}</h4><small>Toca para ver →</small></div></div><div class="ba">${t[2]}</div></div></div>`).join("");
+  document.querySelectorAll(".flip").forEach(f=>f.onclick=()=>f.classList.toggle("f"));}
+
+/* ---------- animations ---------- */
+function setupAnimations(){
+  if(RM||!window.gsap){document.querySelectorAll("[data-count]").forEach(e=>e.textContent=e.dataset.count);presShown=true;renderPres();return;}
+  gsap.registerPlugin(ScrollTrigger);
+  // headings
+  document.querySelectorAll(".split,.split-f").forEach(h=>{splitWords(h);
+    gsap.from(h.querySelectorAll(".w>span"),{yPercent:110,rotate:4,duration:1,ease:"power4.out",stagger:.08,scrollTrigger:{trigger:h,start:"top 85%"}});});
+  gsap.utils.toArray(".reveal").forEach(el=>gsap.from(el,{y:50,opacity:0,duration:1,ease:"power3.out",scrollTrigger:{trigger:el,start:"top 88%"}}));
+  gsap.from(".stat",{y:60,opacity:0,rotateX:-30,transformPerspective:800,duration:.9,stagger:.1,ease:"power3.out",scrollTrigger:{trigger:".stats",start:"top 85%",onEnter:()=>document.querySelectorAll("[data-count]").forEach(e=>countTo(e,+e.dataset.count))}});
+  gsap.from(".tk",{y:40,opacity:0,rotateY:-35,transformPerspective:800,duration:.8,stagger:.05,ease:"power3.out",scrollTrigger:{trigger:"#days",start:"top 90%"}});
+  gsap.from("#cards .card",{y:60,opacity:0,duration:.8,stagger:.07,ease:"power3.out",clearProps:"transform,opacity",scrollTrigger:{trigger:"#cards",start:"top 88%"}});
+  ScrollTrigger.batch(".res-row",{start:"top 92%",onEnter:b=>gsap.from(b,{x:-30,opacity:0,stagger:.05,duration:.6,ease:"power3.out"})});
+  ScrollTrigger.batch(".flip",{start:"top 92%",onEnter:b=>gsap.from(b,{rotateY:-90,opacity:0,transformPerspective:1000,stagger:.08,duration:.9,ease:"power3.out"})});
+  ScrollTrigger.create({trigger:".budget",start:"top 75%",once:true,onEnter:()=>{presShown=true;renderPres();}});
+  // parallax hero
+  gsap.to(".hero h1",{yPercent:-25,ease:"none",scrollTrigger:{trigger:".hero",start:"top top",end:"bottom top",scrub:true}});
+  gsap.to("#city",{yPercent:20,rotate:-6,ease:"none",scrollTrigger:{trigger:".hero",start:"top top",end:"bottom top",scrub:true}});
+  // marquee speed on scroll direction
+  // active nav
+  ["itinerario","mapa","reservas","presupuesto","tips"].forEach(id=>ScrollTrigger.create({trigger:"#"+id,start:"top 50%",end:"bottom 50%",onToggle:s=>{if(s.isActive)document.querySelectorAll("#navlinks a").forEach(a=>a.classList.toggle("on",a.getAttribute("href")==="#"+id));}}));
+  ScrollTrigger.create({trigger:"#mapa",start:"top 90%",once:true,onEnter:renderMap});
 }
 
-function countdown(){
-  const ms=TRIP_START-new Date(),days=Math.ceil(ms/864e5);
-  document.getElementById("count").textContent=ms>0?`Faltan ${days} días`:(new Date()<new Date(2026,10,28,12)?"¡Estamos en NY! 🗽":"Viaje terminado");
+function intro(){
+  const tl=gsap.timeline();
+  tl.to("#loader .lc",{opacity:0,y:-30,duration:.4,ease:"power2.in"})
+    .to("#loader .cols i",{yPercent:-100,duration:.9,ease:"power4.inOut",stagger:.07},"-=.1")
+    .add(()=>{document.body.classList.remove("loading");document.getElementById("loader").remove();},"-=.3")
+    .from(".hero h1 .ln>span",{yPercent:115,rotate:6,duration:1.1,ease:"power4.out",stagger:.1},"-=.6")
+    .fromTo(".bd",{"--h":"0px"},{"--h":(i,el)=>(+el.dataset.h).toFixed(0)+"px",duration:1.4,ease:"power3.out",stagger:{each:.012,from:"random"}},"<")
+    .from(".hero .chip,.hero p,.hero .btn",{y:30,opacity:0,duration:.8,ease:"power3.out",stagger:.08},"-=1")
+    .from(".nav .pill",{y:-60,opacity:0,duration:.8,ease:"power3.out",stagger:.1},"-=.8");
 }
 
-document.getElementById("tabs").onclick=e=>{
-  const b=e.target.closest("button");if(!b)return;
-  document.querySelectorAll("#tabs button").forEach(x=>x.classList.toggle("on",x===b));
-  document.querySelectorAll("section[id^=v-]").forEach(s=>s.classList.toggle("hidden",s.id!=="v-"+b.dataset.v));
-  if(b.dataset.v==="mapa")renderMap();
-  store.set("nyc_tab",b.dataset.v);
-};
-document.getElementById("incOpt").onchange=renderPres;
+/* mouse: city parallax, magnetic buttons, cursor */
+function setupPointer(){
+  if(!FINE||RM)return;
+  const scene=document.getElementById("scene"),cur=document.getElementById("cursor");
+  let tx=0,ty=0,cx=innerWidth/2,cy=innerHeight/2,mx=cx,my=cy;
+  addEventListener("pointermove",e=>{mx=e.clientX;my=e.clientY;tx=(e.clientX/innerWidth-.5);ty=(e.clientY/innerHeight-.5);});
+  (function loop(){cx+=(mx-cx)*.2;cy+=(my-cy)*.2;cur.style.left=cx+"px";cur.style.top=cy+"px";
+    scene.style.transform=`rotateX(${60-ty*10}deg) rotateZ(${-38+tx*18}deg)`;requestAnimationFrame(loop);})();
+  document.addEventListener("mouseover",e=>cur.classList.toggle("big",!!e.target.closest("a,button,.flip,.res-row")));
+  document.querySelectorAll(".mag").forEach(b=>{b.addEventListener("pointermove",e=>{const r=b.getBoundingClientRect();b.style.transform=`translate(${(e.clientX-r.left-r.width/2)*.25}px,${(e.clientY-r.top-r.height/2)*.35}px)`;});
+    b.addEventListener("pointerleave",()=>b.style.transform="");});
+}
+function setupMenu(){const m=document.getElementById("mmenu"),btn=document.getElementById("menuBtn");
+  btn.onclick=()=>{const o=m.classList.toggle("open");btn.textContent=o?"✕":"☰";if(o&&!RM)gsap.from("#mmenu a",{y:60,opacity:0,stagger:.06,duration:.6,delay:.25,ease:"power3.out"});};
+  m.querySelectorAll("a").forEach(a=>a.onclick=()=>{m.classList.remove("open");btn.textContent="☰";});}
+
+/* ---------- boot ---------- */
+buildCity();buildMarquee();buildTips();setupMenu();
 document.getElementById("issueGen").href=issueURL("Propuesta de cambio","¿Qué día?\n¿Qué quieres cambiar o agregar?\n");
 document.getElementById("csvLink").href=`https://github.com/${REPO}/blob/main/data/itinerario.csv`;
+document.getElementById("incOpt").onchange=renderPres;
+
+const loadStart=performance.now();let started=false;
+let prog={v:0};const lnum=document.getElementById("lnum"),lbar=document.getElementById("lbar");
+const setProg=v=>{lnum.textContent=Math.round(v);lbar.style.width=v+"%";};
+const fake=window.gsap&&!RM?gsap.to(prog,{v:85,duration:1.4,ease:"power2.out",onUpdate:()=>setProg(prog.v)}):null;
 
 Promise.all(["data/itinerario.csv","data/reservas.csv"].map(u=>fetch(u,{cache:"no-store"}).then(r=>{if(!r.ok)throw new Error(u);return r.text();})))
 .then(([a,r])=>{
-  ACT=parseCSV(a).sort((x,y)=>(x.fecha+x.hora).localeCompare(y.fecha+y.hora));
-  RES=parseCSV(r);
+  ACT=parseCSV(a).sort((x,y)=>(x.fecha+x.hora).localeCompare(y.fecha+y.hora));RES=parseCSV(r);
   DAYS=[...new Set(ACT.map(x=>x.fecha))].sort();
-  if(!curDay||(curDay!=="all"&&!DAYS.includes(curDay))){
-    const t=new Date(),k=`${t.getFullYear()}-${String(t.getMonth()+1).padStart(2,"0")}-${String(t.getDate()).padStart(2,"0")}`;
-    curDay=DAYS.includes(k)?k:DAYS[0];
-  }
-  renderItin();renderRes();renderPres();countdown();
-  const tab=store.get("nyc_tab","itin");
-  const tb=document.querySelector(`#tabs button[data-v="${tab}"]`);if(tb&&tab!=="itin")tb.click();
+  const t=new Date(),k=`${t.getFullYear()}-${String(t.getMonth()+1).padStart(2,"0")}-${String(t.getDate()).padStart(2,"0")}`;
+  if(!DAYS.includes(curDay))curDay=DAYS.includes(k)?k:DAYS[0];
+  document.getElementById("stPlans").dataset.count=ACT.filter(x=>x.opcional!=="si").length;
+  document.getElementById("stRes").dataset.count=RES.length;
+  renderDays();renderItin(false);renderMapDays();renderRes();renderPres();countdown();
 })
-.catch(e=>{const el=document.getElementById("err");el.classList.remove("hidden");el.textContent="No se pudieron cargar los datos ("+e.message+"). Si abriste el archivo directo, usa la página publicada o un servidor local.";});
+.catch(e=>{const el=document.getElementById("err");el.classList.remove("hidden");el.textContent="No se pudieron cargar los datos ("+e.message+"). Abre la página publicada o usa un servidor local.";})
+.finally(()=>{
+  const wait=Math.max(0,1500-(performance.now()-loadStart));
+  setTimeout(()=>{
+    if(!window.gsap||RM){setProg(100);document.body.classList.remove("loading");const l=document.getElementById("loader");if(l)l.remove();setupAnimations();if(!window.gsap)renderMap();return;}
+    if(fake)fake.kill();
+    gsap.to(prog,{v:100,duration:.5,ease:"power1.out",onUpdate:()=>setProg(prog.v),onComplete:start});
+    function start(){if(started)return;started=true;setupAnimations();setupPointer();intro();}
+    // red de seguridad: si el navegador frena las animaciones (pestaña en segundo plano), no dejar la página bloqueada
+    setTimeout(()=>{if(started)return;started=true;setProg(100);document.body.classList.remove("loading");const l=document.getElementById("loader");if(l)l.remove();setupAnimations();setupPointer();},3500);
+  },wait);
+});
 </script>
 </body>
 </html>
