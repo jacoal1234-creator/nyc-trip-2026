@@ -1,0 +1,13 @@
+id,que,fecha,prioridad,costo_usd_pp,link,nota
+r1,Cena de Thanksgiving,2026-11-26,Urgente,90,https://www.opentable.com,Se agotan semanas antes. Menú fijo.
+r2,Cena de cumpleaños,2026-11-23,Urgente,70,https://www.opentable.com,Mesa para 3.
+r3,The Friends Experience,2026-11-23,Alta,50,https://friendstheexperience.com,Turno 1:00 pm. Sin reembolso.
+r4,Summit One Vanderbilt (atardecer),2026-11-23,Alta,50,https://summitov.com,Turno 3:45–4:00 pm.
+r5,Ferry Estatua de la Libertad,2026-11-24,Alta,25,https://www.statuecitycruises.com,Primer ferry desde Battery Park.
+r6,Show de Broadway,2026-11-24,Media,150,https://www.todaytix.com,Decidir si van y qué show.
+r7,Knicks vs Heat,2026-11-27,Media,150,https://www.nba.com/knicks/schedule,Confirmar fecha oficial antes de comprar.
+r8,MET,2026-11-25,Baja,30,https://www.metmuseum.org,Se puede comprar en la entrada pero online es más rápido.
+r9,Museo de Historia Natural,2026-11-25,Baja,28,https://www.amnh.org,Comprar con hora de entrada 3:00 pm.
+r10,Madame Tussauds,2026-11-26,Media,45,https://www.madametussauds.com/new-york,Confirmar horario de Thanksgiving.
+r11,Empire State Building (noche),2026-11-26,Media,50,https://www.esbnyc.com,Turno ~8:30 pm.
+r12,Comedy Cellar (opcional),2026-11-22,Baja,40,https://www.comedycellar.com,Solo si deciden ir.

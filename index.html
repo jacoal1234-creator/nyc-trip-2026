@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NYC Noviembre 2026</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<style>
+:root{
+  --bg:#f6f4ef; --card:#ffffff; --ink:#1d1d1f; --muted:#6b6b70; --line:#e4e1d9;
+  --accent:#d6452b; --accent-soft:#fbe3dc; --ok:#2f7d4f; --ok-soft:#dcefe3;
+  --warn:#9a6a00; --warn-soft:#fbefcc; --opt:#5a5aa8; --opt-soft:#e6e6f6;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#141416; --card:#1e1e22; --ink:#f1f1f3; --muted:#a0a0a8; --line:#2e2e34;
+    --accent:#ff6a4d; --accent-soft:#3a1f1a; --ok:#6fcf95; --ok-soft:#1a3324;
+    --warn:#f2c14e; --warn-soft:#3a2f12; --opt:#a3a3ff; --opt-soft:#25254a;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#141416; --card:#1e1e22; --ink:#f1f1f3; --muted:#a0a0a8; --line:#2e2e34;
+  --accent:#ff6a4d; --accent-soft:#3a1f1a; --ok:#6fcf95; --ok-soft:#1a3324;
+  --warn:#f2c14e; --warn-soft:#3a2f12; --opt:#a3a3ff; --opt-soft:#25254a;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+a{color:var(--accent)}
+.wrap{max-width:920px;margin:0 auto;padding:0 16px 60px}
+header{padding:28px 0 12px}
+h1{font-size:28px;margin:0;letter-spacing:-.5px}
+.sub{color:var(--muted);margin-top:4px}
+.count{display:inline-block;margin-top:10px;background:var(--accent);color:#fff;padding:4px 12px;border-radius:999px;font-weight:600;font-size:13px}
+nav.tabs{position:sticky;top:0;z-index:1000;background:var(--bg);display:flex;gap:6px;overflow-x:auto;padding:10px 0;border-bottom:1px solid var(--line)}
+nav.tabs button{flex:0 0 auto;border:1px solid var(--line);background:var(--card);color:var(--ink);padding:8px 14px;border-radius:999px;font-size:14px;cursor:pointer}
+nav.tabs button.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.days{display:flex;gap:8px;overflow-x:auto;padding:14px 0 6px}
+.day{flex:0 0 auto;border:1px solid var(--line);background:var(--card);border-radius:14px;padding:8px 12px;cursor:pointer;text-align:left;color:var(--ink);min-width:78px}
+.day b{display:block;font-size:18px}
+.day span{font-size:12px;color:var(--muted)}
+.day.on{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent) inset}
+.dayhead{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px;margin:14px 0 6px}
+.dayhead h2{margin:0;font-size:20px}
+.dayhead .tot{color:var(--muted);font-size:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 16px;margin:10px 0;display:grid;grid-template-columns:58px 1fr;gap:10px}
+.card.opt{border-style:dashed;opacity:.92}
+.time{font-weight:700;font-variant-numeric:tabular-nums;color:var(--accent)}
+.title{font-weight:650;font-size:16px}
+.place{color:var(--muted);font-size:13px}
+.notes{margin:6px 0 0;font-size:14px}
+.badges{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.b{font-size:12px;padding:2px 8px;border-radius:999px;font-weight:600}
+.b.res{background:var(--accent-soft);color:var(--accent)}
+.b.ok{background:var(--ok-soft);color:var(--ok)}
+.b.pc{background:var(--warn-soft);color:var(--warn)}
+.b.opt{background:var(--opt-soft);color:var(--opt)}
+.b.cost{background:var(--bg);color:var(--muted);border:1px solid var(--line)}
+.links{display:flex;flex-wrap:wrap;gap:12px;margin-top:10px;font-size:13px}
+.links a{text-decoration:none;font-weight:600}
+#map{height:460px;border-radius:16px;border:1px solid var(--line);margin-top:12px}
+.legend{color:var(--muted);font-size:13px;margin-top:8px}
+.res-row{display:flex;gap:12px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin:8px 0}
+.res-row input{width:20px;height:20px;margin-top:2px;accent-color:var(--ok);flex:0 0 auto}
+.res-row.done .rt{text-decoration:line-through;color:var(--muted)}
+.rt{font-weight:650}
+.rm{font-size:13px;color:var(--muted)}
+.prio{font-size:11px;font-weight:700;padding:2px 7px;border-radius:999px;margin-left:6px}
+.prio.Urgente{background:var(--accent);color:#fff}
+.prio.Alta{background:var(--accent-soft);color:var(--accent)}
+.prio.Media{background:var(--warn-soft);color:var(--warn)}
+.prio.Baja{background:var(--bg);color:var(--muted);border:1px solid var(--line)}
+.progress{height:8px;background:var(--line);border-radius:99px;overflow:hidden;margin:10px 0 4px}
+.progress i{display:block;height:100%;background:var(--ok);width:0}
+table{width:100%;border-collapse:collapse;background:var(--card);border-radius:14px;overflow:hidden;border:1px solid var(--line)}
+th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--line);font-size:14px}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+tfoot td{font-weight:700}
+.bar{height:6px;background:var(--accent);border-radius:99px}
+.tips{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:10px;margin-top:12px}
+.tip{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px}
+.tip h3{margin:0 0 6px;font-size:15px}
+.tip p{margin:0;font-size:14px;color:var(--muted)}
+.note{background:var(--warn-soft);color:var(--ink);border-radius:12px;padding:10px 12px;font-size:13px;margin-top:12px}
+label.chk{display:inline-flex;gap:6px;align-items:center;font-size:14px;margin:10px 0;color:var(--muted)}
+footer{margin-top:30px;color:var(--muted);font-size:13px;border-top:1px solid var(--line);padding-top:14px}
+.hidden{display:none}
+.err{background:var(--accent-soft);color:var(--accent);padding:12px;border-radius:12px;margin-top:14px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>🗽 Nueva York · 21–28 nov 2026</h1>
+    <div class="sub">3 parceros · SpringHill Suites Chelsea · Cumpleaños, Thanksgiving y Black Friday</div>
+    <span class="count" id="count"></span>
+  </header>
+
+  <nav class="tabs" id="tabs">
+    <button data-v="itin" class="on">📅 Itinerario</button>
+    <button data-v="mapa">🗺️ Mapa</button>
+    <button data-v="res">✅ Reservas</button>
+    <button data-v="pres">💵 Presupuesto</button>
+    <button data-v="tips">💡 Tips</button>
+  </nav>
+
+  <div id="err" class="err hidden"></div>
+
+  <section id="v-itin">
+    <div class="days" id="days"></div>
+    <div class="dayhead"><h2 id="dayTitle"></h2><span class="tot" id="dayTot"></span></div>
+    <div id="cards"></div>
+  </section>
+
+  <section id="v-mapa" class="hidden">
+    <div class="days" id="daysMap"></div>
+    <div id="map"></div>
+    <div class="legend">⭐ Hotel · Los números siguen el orden del día · Línea punteada = recorrido aproximado (no es la ruta real del metro)</div>
+  </section>
+
+  <section id="v-res" class="hidden">
+    <p class="sub">Marquen lo que ya reservaron. <b>Ojo:</b> lo que marquen queda guardado solo en <i>su</i> celular o navegador. Para que todos lo vean, cambien el estado en el CSV o díganme a mí.</p>
+    <div class="progress"><i id="prog"></i></div>
+    <div class="rm" id="progTxt"></div>
+    <div id="resList"></div>
+  </section>
+
+  <section id="v-pres" class="hidden">
+    <p class="sub">Costos <b>estimados por persona en USD</b>, sin vuelos, hotel, compras, transporte diario ni comidas sueltas. Son referencias para planear: confirmen los precios al reservar.</p>
+    <label class="chk"><input type="checkbox" id="incOpt"> Incluir planes opcionales</label>
+    <table>
+      <thead><tr><th>Día</th><th></th><th class="n">USD / persona</th></tr></thead>
+      <tbody id="presBody"></tbody>
+      <tfoot><tr><td>Total</td><td></td><td class="n" id="presTot"></td></tr></tfoot>
+    </table>
+    <div class="note">Además de esto, calculen: metro (~$2.90 por viaje; con la misma tarjeta, después de 12 viajes en 7 días el resto es gratis), propinas del 18–20% en restaurantes y el impuesto (~8.9%), que no viene incluido en los precios.</div>
+  </section>
+
+  <section id="v-tips" class="hidden">
+    <div class="tips">
+      <div class="tip"><h3>🚇 Metro con OMNY</h3><p>Paguen tocando el torniquete con la tarjeta débito/crédito (contactless) o Apple Pay. Cada uno con su propia tarjeta para que aplique el tope semanal.</p></div>
+      <div class="tip"><h3>🧥 Frío</h3><p>Finales de noviembre: suele estar entre 2 y 10 °C, y en la madrugada del desfile hace más frío. Ropa por capas, guantes, gorro y zapatos cómodos.</p></div>
+      <div class="tip"><h3>🦃 Thanksgiving (jue 26)</h3><p>El MET cierra ese día y probablemente el Museo de Historia Natural también. Muchos restaurantes solo atienden con reserva y menú fijo. El metro funciona con horario de festivo.</p></div>
+      <div class="tip"><h3>🎈 Desfile</h3><p>Va de ~8:30 am a mediodía. Bajen por la 6ta Av; la zona de la calle 34 frente a Macy's es para TV y no tiene acceso al público. Lleguen a las 6:00 am. Baños: casi no hay, vayan antes.</p></div>
+      <div class="tip"><h3>🍸 Bares y rooftops</h3><p>Edad mínima 21: lleven el pasaporte físico, en muchos sitios no les aceptan la cédula.</p></div>
+      <div class="tip"><h3>🛍️ Black Friday</h3><p>Las tiendas abren muy temprano y se llenan. Revisen si les devuelven impuestos (en NY normalmente no hay devolución para turistas).</p></div>
+      <div class="tip"><h3>🌃 Regreso tarde</h3><p>El metro funciona 24 h, pero de noche pasa menos seguido. Pasada la medianoche, mejor Uber entre los 3.</p></div>
+      <div class="tip"><h3>✈️ Sábado 28</h3><p>Salgan del hotel a las 4:45 am. Pidan el Uber la noche anterior (programado) y dejen las maletas listas el viernes.</p></div>
+    </div>
+  </section>
+
+  <footer>
+    ¿Quieren cambiar algo? <a id="issueGen" target="_blank" rel="noopener">Propongan un cambio</a> (abre un Issue en GitHub) o editen
+    <a id="csvLink" target="_blank" rel="noopener">data/itinerario.csv</a>.
+    Lo marcado “Por confirmar” no está verificado todavía: revisen la web oficial antes de ir.
+  </footer>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+const REPO = "jacoal1234-creator/nyc-trip-2026";
+const HOTEL = {lat:40.7466, lon:-73.9928};
+const TRIP_START = new Date(2026, 10, 21, 16, 30);
+const DAY_TAGS = {"2026-11-21":"✈️ Llegada","2026-11-22":"Chelsea · SoHo","2026-11-23":"🎂 Cumpleaños","2026-11-24":"Estatua · Brooklyn","2026-11-25":"Museos · Globos","2026-11-26":"🦃 Desfile","2026-11-27":"🛍️ Black Friday","2026-11-28":"✈️ Regreso"};
+const WD = ["Dom","Lun","Mar","Mié","Jue","Vie","Sáb"];
+const WDL = ["Domingo","Lunes","Martes","Miércoles","Jueves","Viernes","Sábado"];
+
+function parseCSV(txt){
+  const rows=[];let row=[],f="",q=false;
+  for(let i=0;i<txt.length;i++){
+    const c=txt[i];
+    if(q){ if(c=='"'){ if(txt[i+1]=='"'){f+='"';i++;} else q=false; } else f+=c; }
+    else if(c=='"') q=true;
+    else if(c==','){row.push(f);f="";}
+    else if(c=='\n'||c=='\r'){ if(c=='\r'&&txt[i+1]=='\n')i++; row.push(f);f=""; if(row.some(x=>x!==""))rows.push(row); row=[]; }
+    else f+=c;
+  }
+  if(f!==""||row.length){row.push(f); if(row.some(x=>x!==""))rows.push(row);}
+  const h=rows.shift();
+  return rows.map(r=>Object.fromEntries(h.map((k,i)=>[k.trim(),(r[i]??"").trim()])));
+}
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const dParts=s=>{const [y,m,d]=s.split("-").map(Number);return new Date(y,m-1,d);};
+const store={get(k,d){try{return JSON.parse(localStorage.getItem(k))??d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+
+let ACT=[],RES=[],DAYS=[],curDay=store.get("nyc_day",null),map,layer;
+
+function issueURL(title,body){
+  return `https://github.com/${REPO}/issues/new?title=${encodeURIComponent(title)}&body=${encodeURIComponent(body)}`;
+}
+function badgeFor(a){
+  let h="";
+  if(a.opcional==="si") h+=`<span class="b opt">Opcional</span>`;
+  if(a.estado==="Confirmado") h+=`<span class="b ok">Confirmado</span>`;
+  else if(a.estado==="Por reservar") h+=`<span class="b res">Por reservar</span>`;
+  else h+=`<span class="b pc">Por confirmar</span>`;
+  if(+a.costo_usd_pp>0) h+=`<span class="b cost">~$${a.costo_usd_pp} c/u</span>`;
+  else h+=`<span class="b cost">Gratis / variable</span>`;
+  return h;
+}
+function dayLabel(d){const dt=dParts(d);return `${WDL[dt.getDay()]} ${dt.getDate()} nov`;}
+function dayCost(d,inc){return ACT.filter(a=>a.fecha===d&&(inc||a.opcional!=="si")).reduce((s,a)=>s+(+a.costo_usd_pp||0),0);}
+
+function renderDayChips(el,onPick,withAll){
+  el.innerHTML=(withAll?`<button class="day ${curDay==="all"?"on":""}" data-d="all"><b>★</b><span>Todos</span></button>`:"")+
+    DAYS.map(d=>{const dt=dParts(d);return `<button class="day ${d===curDay?"on":""}" data-d="${d}"><b>${WD[dt.getDay()]} ${dt.getDate()}</b><span>${esc(DAY_TAGS[d]||"")}</span></button>`}).join("");
+  el.querySelectorAll(".day").forEach(b=>b.onclick=()=>onPick(b.dataset.d));
+}
+function pickDay(d){curDay=d;store.set("nyc_day",d);renderItin();if(map)renderMap();}
+
+function renderItin(){
+  const d=curDay==="all"||!DAYS.includes(curDay)?DAYS[0]:curDay;
+  renderDayChips(document.getElementById("days"),pickDay,false);
+  document.querySelectorAll("#days .day").forEach(b=>b.classList.toggle("on",b.dataset.d===d));
+  document.getElementById("dayTitle").textContent=`${dayLabel(d)} · ${DAY_TAGS[d]||""}`;
+  document.getElementById("dayTot").textContent=`~$${dayCost(d,false)} por persona en planes`;
+  document.getElementById("cards").innerHTML=ACT.filter(a=>a.fecha===d).map(a=>{
+    const dir=`https://www.google.com/maps/dir/?api=1&destination=${a.lat},${a.lon}&travelmode=transit`;
+    const iss=issueURL(`Cambio: ${a.actividad} (${dayLabel(a.fecha)})`,`Actividad #${a.id}: ${a.actividad}\nHora actual: ${a.hora}\n\n¿Qué quieres cambiar?\n- `);
+    return `<div class="card ${a.opcional==="si"?"opt":""}">
+      <div class="time">${esc(a.hora)}</div>
+      <div>
+        <div class="title">${esc(a.actividad)}</div>
+        <div class="place">📍 ${esc(a.lugar)} · ${esc(a.barrio)}</div>
+        ${a.notas?`<p class="notes">${esc(a.notas)}</p>`:""}
+        <div class="badges">${badgeFor(a)}</div>
+        <div class="links">
+          <a href="${dir}" target="_blank" rel="noopener">🧭 Cómo llegar</a>
+          ${a.link?`<a href="${esc(a.link)}" target="_blank" rel="noopener">🔗 Web oficial</a>`:""}
+          <a href="${iss}" target="_blank" rel="noopener">✏️ Proponer cambio</a>
+        </div>
+      </div></div>`;
+  }).join("");
+}
+
+function renderMap(){
+  renderDayChips(document.getElementById("daysMap"),pickDay,true);
+  if(!map){
+    map=L.map("map");
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:"© OpenStreetMap"}).addTo(map);
+  }
+  if(layer) layer.remove();
+  layer=L.layerGroup().addTo(map);
+  const list=(curDay==="all"?ACT:ACT.filter(a=>a.fecha===curDay)).filter(a=>a.lat&&a.lon);
+  const pts=[];
+  L.marker([HOTEL.lat,HOTEL.lon],{icon:L.divIcon({className:"",html:'<div style="font-size:22px">⭐</div>',iconSize:[24,24],iconAnchor:[12,12]})}).bindPopup("<b>Hotel</b><br>SpringHill Suites, 140 W 28th St").addTo(layer);
+  list.forEach((a,i)=>{
+    const ll=[+a.lat,+a.lon];pts.push(ll);
+    const col=a.opcional==="si"?"#5a5aa8":"#d6452b";
+    L.marker(ll,{icon:L.divIcon({className:"",html:`<div style="background:${col};color:#fff;border-radius:50%;width:24px;height:24px;display:flex;align-items:center;justify-content:center;font:700 12px sans-serif;border:2px solid #fff;box-shadow:0 1px 3px #0005">${curDay==="all"?"•":i+1}</div>`,iconSize:[24,24],iconAnchor:[12,12]})})
+      .bindPopup(`<b>${esc(a.hora)} · ${esc(a.actividad)}</b><br>${esc(a.lugar)}<br><small>${dayLabel(a.fecha)}</small>`).addTo(layer);
+  });
+  if(curDay!=="all"&&pts.length>1) L.polyline(pts,{color:"#d6452b",weight:2,dashArray:"5 6",opacity:.7}).addTo(layer);
+  const b=L.latLngBounds([...pts,[HOTEL.lat,HOTEL.lon]]);
+  map.invalidateSize();
+  map.fitBounds(b,{padding:[30,30],maxZoom:15});
+  setTimeout(()=>{map.invalidateSize();map.fitBounds(b,{padding:[30,30],maxZoom:15});},80);
+}
+
+function renderRes(){
+  const done=store.get("nyc_res",{});
+  const n=RES.filter(r=>done[r.id]).length;
+  document.getElementById("prog").style.width=(RES.length?n/RES.length*100:0)+"%";
+  document.getElementById("progTxt").textContent=`${n} de ${RES.length} reservas hechas (en este dispositivo)`;
+  const order={Urgente:0,Alta:1,Media:2,Baja:3};
+  document.getElementById("resList").innerHTML=[...RES].sort((a,b)=>order[a.prioridad]-order[b.prioridad]||a.fecha.localeCompare(b.fecha)).map(r=>`
+    <label class="res-row ${done[r.id]?"done":""}">
+      <input type="checkbox" data-id="${r.id}" ${done[r.id]?"checked":""}>
+      <div><div class="rt">${esc(r.que)}<span class="prio ${esc(r.prioridad)}">${esc(r.prioridad)}</span></div>
+      <div class="rm">${dayLabel(r.fecha)} · ~$${esc(r.costo_usd_pp)} c/u · ${esc(r.nota)}</div>
+      <div class="rm"><a href="${esc(r.link)}" target="_blank" rel="noopener">Reservar →</a></div></div>
+    </label>`).join("");
+  document.querySelectorAll("#resList input").forEach(c=>c.onchange=()=>{const d=store.get("nyc_res",{});d[c.dataset.id]=c.checked;store.set("nyc_res",d);renderRes();});
+}
+
+function renderPres(){
+  const inc=document.getElementById("incOpt").checked;
+  const vals=DAYS.map(d=>dayCost(d,inc)),mx=Math.max(...vals,1);
+  document.getElementById("presBody").innerHTML=DAYS.map((d,i)=>`<tr><td>${dayLabel(d)}</td><td style="width:40%"><div class="bar" style="width:${vals[i]/mx*100}%"></div></td><td class="n">$${vals[i]}</td></tr>`).join("");
+  document.getElementById("presTot").textContent="$"+vals.reduce((a,b)=>a+b,0);
+}
+
+function countdown(){
+  const ms=TRIP_START-new Date(),days=Math.ceil(ms/864e5);
+  document.getElementById("count").textContent=ms>0?`Faltan ${days} días`:(new Date()<new Date(2026,10,28,12)?"¡Estamos en NY! 🗽":"Viaje terminado");
+}
+
+document.getElementById("tabs").onclick=e=>{
+  const b=e.target.closest("button");if(!b)return;
+  document.querySelectorAll("#tabs button").forEach(x=>x.classList.toggle("on",x===b));
+  document.querySelectorAll("section[id^=v-]").forEach(s=>s.classList.toggle("hidden",s.id!=="v-"+b.dataset.v));
+  if(b.dataset.v==="mapa")renderMap();
+  store.set("nyc_tab",b.dataset.v);
+};
+document.getElementById("incOpt").onchange=renderPres;
+document.getElementById("issueGen").href=issueURL("Propuesta de cambio","¿Qué día?\n¿Qué quieres cambiar o agregar?\n");
+document.getElementById("csvLink").href=`https://github.com/${REPO}/blob/main/data/itinerario.csv`;
+
+Promise.all(["data/itinerario.csv","data/reservas.csv"].map(u=>fetch(u,{cache:"no-store"}).then(r=>{if(!r.ok)throw new Error(u);return r.text();})))
+.then(([a,r])=>{
+  ACT=parseCSV(a).sort((x,y)=>(x.fecha+x.hora).localeCompare(y.fecha+y.hora));
+  RES=parseCSV(r);
+  DAYS=[...new Set(ACT.map(x=>x.fecha))].sort();
+  if(!curDay||(curDay!=="all"&&!DAYS.includes(curDay))){
+    const t=new Date(),k=`${t.getFullYear()}-${String(t.getMonth()+1).padStart(2,"0")}-${String(t.getDate()).padStart(2,"0")}`;
+    curDay=DAYS.includes(k)?k:DAYS[0];
+  }
+  renderItin();renderRes();renderPres();countdown();
+  const tab=store.get("nyc_tab","itin");
+  const tb=document.querySelector(`#tabs button[data-v="${tab}"]`);if(tb&&tab!=="itin")tb.click();
+})
+.catch(e=>{const el=document.getElementById("err");el.classList.remove("hidden");el.textContent="No se pudieron cargar los datos ("+e.message+"). Si abriste el archivo directo, usa la página publicada o un servidor local.";});
+</script>
+</body>
+</html>

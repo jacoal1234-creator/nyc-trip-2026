@@ -1,0 +1,46 @@
+id,fecha,hora,actividad,lugar,barrio,lat,lon,costo_usd_pp,reserva,estado,opcional,notas,link
+1,2026-11-21,16:30,Llegada a JFK,Aeropuerto JFK,Queens,40.6413,-73.7781,0,no,Confirmado,no,Terminal por confirmar. Migración puede tardar 1 h o más.,
+2,2026-11-21,17:30,Traslado al hotel,AirTrain + LIRR hasta Penn Station,Queens → Midtown,40.7506,-73.9935,17,no,Por confirmar,no,"Opción metro: AirTrain a Jamaica + LIRR a Penn (~50 min), luego 5 min caminando. Con maletas un Uber entre 2 sale ~$40–50 c/u.",https://www.jfkairport.com/to-from-airport/air-train
+3,2026-11-21,19:30,Check-in,SpringHill Suites Manhattan/Chelsea (140 W 28th St),Chelsea,40.7466,-73.9928,0,no,Confirmado,no,Base de todo el viaje. Penn Station y Herald Square quedan a pocas cuadras.,
+4,2026-11-21,20:30,Times Square + pizza,Joe's Pizza (1435 Broadway),Times Square,40.7547,-73.9868,10,no,Por confirmar,no,Plan suave para la primera noche. Caminando desde el hotel ~20 min.,
+5,2026-11-22,10:00,Hudson Yards y el Vessel (por fuera),Hudson Yards,Hudson Yards,40.7538,-74.0022,0,no,Por confirmar,no,Verlo por fuera es gratis. Desde aquí arranca la High Line.,
+6,2026-11-22,10:30,Caminar la High Line hacia el sur,High Line,Chelsea,40.7480,-74.0048,0,no,Por confirmar,no,Parque elevado sobre una vía de tren vieja. ~1 h caminando hasta Gansevoort St.,https://www.thehighline.org
+7,2026-11-22,12:00,Almuerzo en Chelsea Market,Chelsea Market (75 9th Ave),Chelsea,40.7424,-74.0061,25,no,Por confirmar,no,Food hall: tacos (Los Tacos No.1) y langosta entre otros.,
+8,2026-11-22,14:00,West Village + edificio de Friends,90 Bedford St,West Village,40.7324,-74.0054,0,no,Por confirmar,no,"Fachada del apartamento de Friends (foto). Calle Bleecker para caminar.",
+9,2026-11-22,15:30,Compras en SoHo,Broadway / Prince St / Spring St,SoHo,40.7233,-73.9985,0,no,Por confirmar,no,Costo variable según compras. Tiendas de marca y boutiques.,
+10,2026-11-22,19:00,Cena + Washington Square Park,Washington Square Park,Greenwich Village,40.7308,-73.9973,40,no,Por confirmar,no,Zona con muchas opciones de comida.,
+11,2026-11-22,21:00,Stand-up en Comedy Cellar,Comedy Cellar (117 MacDougal St),Greenwich Village,40.7301,-74.0004,40,si,Por reservar,si,Opcional. Reserva previa y consumo mínimo de 2 bebidas.,https://www.comedycellar.com
+12,2026-11-22,21:00,Bares en Williamsburg,Bedford Ave,Williamsburg,40.7178,-73.9576,35,no,Por confirmar,si,Alternativa nocturna a Comedy Cellar. Tren L desde 14th St.,
+13,2026-11-23,03:00,Llega el cumpleañero 🎂,Aeropuerto por confirmar,—,40.6413,-73.7781,0,no,Por confirmar,no,Aeropuerto y hora por confirmar. A esa hora: Uber.,
+14,2026-11-23,11:00,Brunch de cumpleaños,Flatiron Building + Madison Square Park,Flatiron,40.7411,-73.9897,35,no,Por confirmar,no,A 10 min caminando del hotel.,
+15,2026-11-23,13:00,The Friends Experience,130 E 23rd St,Gramercy,40.7397,-73.9851,50,si,Por reservar,no,"El sí o sí del viaje. Precio de lanzamiento $45, confirmar actual. Ventas finales, sin reembolso.",https://friendstheexperience.com
+16,2026-11-23,15:00,Descanso en el hotel,Hotel,Chelsea,40.7466,-73.9928,0,no,Por confirmar,no,El cumpleañero llegó de madrugada.,
+17,2026-11-23,15:45,Summit One Vanderbilt al atardecer,45 E 42nd St,Midtown,40.7527,-73.9787,50,si,Por reservar,no,"Atardecer ~4:30 pm. Reservar turno de 3:45–4:00 pm. Es el horario más pedido.",https://summitov.com
+18,2026-11-23,19:30,Cena de cumpleaños,Restaurante por elegir,Midtown,40.7580,-73.9855,70,si,Por reservar,no,"Ideas: Carmine's Times Square (italiano para compartir) o The Smith NoMad. Reservar ya.",
+19,2026-11-23,22:00,Rooftop,230 Fifth Rooftop,NoMad,40.7440,-73.9883,30,no,Por confirmar,no,"Vista al Empire State. 21+, lleven pasaporte.",
+20,2026-11-24,08:45,Ferry a la Estatua de la Libertad,Battery Park (Statue City Cruises),Financial District,40.7033,-74.0170,25,si,Por reservar,no,"Único vendedor oficial: Statue City Cruises. Primer ferry = menos fila. Incluye Ellis Island.",https://www.statuecitycruises.com
+21,2026-11-24,12:30,Almuerzo en Stone Street,Stone Street,Financial District,40.7042,-74.0105,20,no,Por confirmar,no,Calle peatonal con pubs.,
+22,2026-11-24,13:30,9/11 Memorial,9/11 Memorial & Museum,Financial District,40.7115,-74.0134,0,no,Por confirmar,no,"Memorial gratis. Museo opcional (~$36, reserva).",https://www.911memorial.org
+23,2026-11-24,15:00,Wall Street + Charging Bull,Wall St / Bowling Green,Financial District,40.7056,-74.0134,0,no,Por confirmar,no,Fotos rápidas.,
+24,2026-11-24,16:00,Cruzar el Brooklyn Bridge caminando,Brooklyn Bridge (lado Manhattan),Financial District → Brooklyn,40.7061,-73.9969,0,no,Por confirmar,no,~35 min caminando. Al atardecer es lo mejor.,
+25,2026-11-24,17:00,DUMBO + Time Out Market,Washington St / Time Out Market,DUMBO,40.7033,-73.9881,25,no,Por confirmar,no,"Foto clásica del puente en Washington St, luego comida.",
+26,2026-11-24,19:00,Show de Broadway,Theater District (show por elegir),Times Square,40.7590,-73.9845,150,si,Por reservar,no,"Desde DUMBO: tren F o A, ~30 min. Por definir si van. Comprar en la web oficial del show o en la app TodayTix.",https://www.todaytix.com
+27,2026-11-25,10:00,MET,Metropolitan Museum of Art (1000 5th Ave),Upper East Side,40.7794,-73.9632,30,si,Por reservar,no,"~$30 para visitantes de fuera de NY. Abren a las 10. El jueves 26 está cerrado.",https://www.metmuseum.org
+28,2026-11-25,12:30,Cruzar Central Park,Bethesda Terrace / Bow Bridge,Central Park,40.7740,-73.9708,0,no,Por confirmar,no,Del MET al lado oeste caminando ~20 min.,
+29,2026-11-25,13:30,Inflado de globos del desfile,Alrededor del Museo de Historia Natural,Upper West Side,40.7800,-73.9740,0,no,Por confirmar,no,"Gratis. Un listado dice 12–6 pm, sin confirmación oficial de Macy's. Puede haber fila larga.",https://www.macys.com/social/parade
+30,2026-11-25,15:00,Museo de Historia Natural,American Museum of Natural History (200 Central Park W),Upper West Side,40.7813,-73.9740,28,si,Por reservar,no,"Cierra ~5:30 pm. Probablemente cerrado el jueves 26 (confirmar en amnh.org).",https://www.amnh.org
+31,2026-11-25,19:00,Cena y a dormir temprano,Upper West Side o cerca del hotel,Upper West Side,40.7830,-73.9800,35,no,Por confirmar,no,Mañana toca madrugar para el desfile.,
+32,2026-11-25,19:30,Knicks vs Cavaliers (NBA Cup),Madison Square Garden,Midtown,40.7505,-73.9934,150,si,Por confirmar,si,"Juego que aparece en listados de boletas, no confirmado. No recomendado: choca con la madrugada del desfile.",https://www.nba.com/knicks/schedule
+33,2026-11-26,06:00,Desfile de Macy's 🦃,6th Ave entre calles 40 y 45 (por Bryant Park),Midtown,40.7536,-73.9832,0,no,Por confirmar,no,"Arranca ~8:30 am y llega a la 6ta Av ~9:00. Lleguen a las 6:00 para ver bien. Ropa térmica, guantes, café.",https://www.macys.com/social/parade
+34,2026-11-26,12:30,Almuerzo + descanso,Cerca del hotel,Chelsea,40.7466,-73.9928,20,no,Por confirmar,no,Muchos sitios cierran o abren con horario especial en Thanksgiving.,
+35,2026-11-26,14:00,Madame Tussauds,234 W 42nd St,Times Square,40.7564,-73.9884,45,si,Por reservar,no,Confirmar horario de Thanksgiving en la web.,https://www.madametussauds.com/new-york
+36,2026-11-26,17:00,Cena de Thanksgiving,Restaurante con menú de Thanksgiving,Midtown,40.7550,-73.9850,90,si,Por reservar,no,"LO MÁS URGENTE de reservar. Buscar en OpenTable 'Thanksgiving'. Casi todo es menú fijo.",https://www.opentable.com
+37,2026-11-26,20:30,Empire State de noche,350 5th Ave,Midtown,40.7484,-73.9857,50,si,Por reservar,no,A 8 min caminando del hotel. Abre hasta tarde.,https://www.esbnyc.com
+38,2026-11-27,09:00,Black Friday en Macy's Herald Square,151 W 34th St,Herald Square,40.7508,-73.9890,0,no,Por confirmar,no,"A 5 min del hotel. Abre muy temprano en Black Friday. Costo según compras.",
+39,2026-11-27,11:30,Quinta Avenida,5th Ave de la 42 a la 59 + St. Patrick's,Midtown,40.7585,-73.9760,0,no,Por confirmar,no,Tiendas insignia y la catedral.,
+40,2026-11-27,13:30,Rockefeller Center,Rockefeller Plaza,Midtown,40.7587,-73.9787,0,no,Por confirmar,no,"Pista de hielo (paga aparte). El árbol se enciende después de su viaje, lo verían apagado.",https://www.rockefellercenter.com
+41,2026-11-27,15:00,Bryant Park Winter Village,Bryant Park,Midtown,40.7536,-73.9832,0,no,Por confirmar,no,"Mercado navideño gratis. Patinaje: entrada gratis, alquiler de patines aparte.",https://bryantpark.org
+42,2026-11-27,16:30,Hotel: dejar compras + armar maletas,Hotel,Chelsea,40.7466,-73.9928,0,no,Por confirmar,no,Mañana salen a las 4:45 am.,
+43,2026-11-27,19:00,Knicks vs Heat (NBA Cup),Madison Square Garden,Midtown,40.7505,-73.9934,150,si,Por confirmar,no,"En el calendario del equipo: 7:00 pm. Confirmar en NBA.com antes de comprar. MSG está a 5 min del hotel.",https://www.nba.com/knicks/schedule
+44,2026-11-27,22:00,Última noche en Koreatown,W 32nd St,Koreatown,40.7477,-73.9867,40,no,Por confirmar,no,"BBQ coreano, karaoke, abierto hasta tarde. A 5 min del hotel.",
+45,2026-11-28,04:45,Salida a JFK ✈️,Hotel → JFK,Chelsea → Queens,40.6413,-73.7781,30,no,Por confirmar,no,"Vuelo 8:00 am: llegar ~3 h antes. Uber a esa hora (~$80–100 entre 3).",
