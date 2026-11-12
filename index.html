@@ -6,6 +6,13 @@
 <title>NYC Noviembre 2026</title>
 <meta name="description" content="Itinerario interactivo: Nueva York, 21–28 de noviembre de 2026">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ctext y=%22.9em%22 font-size=%2290%22%3E%F0%9F%97%BD%3C/text%3E%3C/svg%3E">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="theme-color" content="#0b0e1f">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="NYC·26">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
@@ -335,6 +342,66 @@ footer a{color:var(--taxi)}
 .cursor.big{width:56px;height:56px}
 .toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,120px);background:var(--night);color:#fff;padding:12px 18px;border-radius:999px;font-size:14px;font-weight:600;z-index:3000;transition:transform .5s cubic-bezier(.2,.8,.2,1);box-shadow:0 10px 30px rgba(0,0,0,.3)}
 .toast.show{transform:translate(-50%,0)}
+/* ---------- HOY ---------- */
+.hoy-card{position:relative;background:var(--night);color:#fff;border-radius:28px;padding:24px 20px;overflow:hidden;isolation:isolate}
+@media(min-width:800px){.hoy-card{padding:34px 36px}}
+.hoy-card::before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(500px 260px at 100% 0%,rgba(255,194,26,.18),transparent 60%),radial-gradient(400px 240px at 0% 120%,rgba(226,70,44,.2),transparent 60%)}
+.hoy-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px;margin-bottom:18px}
+.live{display:inline-flex;gap:8px;align-items:center;font-size:12px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--taxi)}
+.live i{width:8px;height:8px;border-radius:50%;background:#ff3b30;animation:pulse 2s infinite}
+.sim{font-size:12px;background:var(--brick);color:#fff;padding:4px 10px;border-radius:999px;font-weight:700}
+.hoy-grid{display:grid;gap:14px}
+@media(min-width:800px){.hoy-grid{grid-template-columns:1fr 1fr}}
+.slot{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:20px;padding:18px}
+.slot.next{background:rgba(255,194,26,.1);border-color:rgba(255,194,26,.35)}
+.slot small{letter-spacing:.2em;text-transform:uppercase;font-weight:700;font-size:11px;color:rgba(255,255,255,.6)}
+.slot.next small{color:var(--taxi)}
+.slot h4{font-size:clamp(22px,3vw,30px);margin:6px 0 4px;letter-spacing:-.03em;line-height:1.1}
+.slot .when{font-size:14px;color:rgba(255,255,255,.72)}
+.slot .eta{display:inline-block;margin-top:10px;font-weight:700;font-size:15px;color:var(--taxi)}
+.big-count{font-size:clamp(64px,11vw,140px);font-weight:700;letter-spacing:-.06em;color:var(--taxi);line-height:.9}
+.big-count small{font-size:.2em;letter-spacing:0;color:rgba(255,255,255,.7);font-weight:500;margin-left:10px}
+.hoy .actions{border-top-color:rgba(255,255,255,.12)}
+.hoy .ab{color:#fff;border-color:rgba(255,255,255,.22)}
+.hoy .ab:hover{background:#fff;color:var(--night)}
+.hoy .ab.pri{background:var(--taxi);color:var(--taxi-ink);border-color:transparent}
+.wxhead{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin:22px 0 10px;font-size:13px;color:rgba(255,255,255,.6)}
+.wxhead b{color:#fff;font-size:15px}
+.wxrow{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
+.wxrow::-webkit-scrollbar{display:none}
+.wxd{flex:0 0 auto;min-width:88px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:10px 8px;text-align:center;font-size:12px}
+.wxd .e{font-size:26px;display:block;line-height:1.3}
+.wxd b{font-size:15px}
+.wxd .p{display:block;color:#9fc3ff;font-weight:700;margin-top:2px}
+.wxd.rain{border-color:#9fc3ff}
+.wxd.na{opacity:.45}
+.tk .wx{position:absolute;top:14px;right:12px;font-size:12px;font-weight:700;color:var(--muted);font-style:normal}
+.tk.on .wx{color:rgba(255,255,255,.85)}
+.daywx{font-size:14px;font-weight:600;background:var(--card);padding:8px 14px;border-radius:999px;border:1px solid var(--line)}
+.daywx.rain{border-color:#4a7fd6;color:#2b5fb8}
+.dayhead .chips{display:flex;flex-wrap:wrap;gap:8px}
+.offline{position:fixed;left:16px;bottom:16px;z-index:2500;background:var(--brick);color:#fff;padding:9px 14px;border-radius:999px;font-size:13px;font-weight:700;display:none;align-items:center;gap:8px;box-shadow:0 8px 24px rgba(0,0,0,.3)}
+.offline.on{display:inline-flex}
+/* ---------- EMERGENCIA ---------- */
+.emg-grid{display:grid;gap:14px}
+@media(min-width:800px){.emg-grid{grid-template-columns:1fr 1fr}}
+.emg{background:var(--card);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow)}
+.emg small{display:block;font-size:11px;letter-spacing:.18em;text-transform:uppercase;font-weight:700;color:var(--brick);margin-bottom:6px}
+.emg .val{font-size:24px;font-weight:700;letter-spacing:-.02em;line-height:1.2;word-break:break-word}
+.emg p{margin:8px 0 0;font-size:14px;color:var(--muted)}
+.emg.taxi{grid-column:1/-1;background:var(--taxi);color:var(--taxi-ink)}
+.emg.taxi small{color:var(--taxi-ink);opacity:.75}
+.emg.taxi .val{font-size:clamp(26px,4.2vw,46px);letter-spacing:-.035em}
+.emg.taxi p{color:var(--taxi-ink);opacity:.8}
+.emg.taxi .ab{border-color:rgba(58,42,0,.25);color:var(--taxi-ink)}
+.emg.taxi .ab.pri{background:var(--night);color:#fff}
+.emg.sos .val{color:var(--brick);font-size:44px}
+.taxi-full{position:fixed;inset:0;z-index:5000;background:var(--taxi);color:var(--taxi-ink);display:none;flex-direction:column;justify-content:center;padding:32px;cursor:pointer}
+.taxi-full.on{display:flex}
+.taxi-full small{font-size:16px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;opacity:.7}
+.taxi-full b{font-size:clamp(40px,9vw,110px);line-height:1;letter-spacing:-.045em;margin:14px 0}
+.taxi-full span{font-size:clamp(20px,3.5vw,34px);font-weight:600}
+.taxi-full em{position:absolute;bottom:24px;left:32px;font-style:normal;font-size:14px;opacity:.7}
 @media (prefers-reduced-motion: reduce){*,*::before,*::after{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
 </style>
 </head>
@@ -347,18 +414,20 @@ footer a{color:var(--taxi)}
 <div class="cursor" id="cursor"></div>
 <div class="toast" id="toast"></div>
 <div class="city-tip" id="cityTip"></div>
+<div class="offline" id="offline">📴 Sin conexión · mostrando lo guardado</div>
+<div class="taxi-full" id="taxiFull" role="dialog" aria-label="Dirección del hotel"><small>Please take me to</small><b>140 West 28th Street</b><span>between 6th &amp; 7th Avenue · New York, NY 10001<br>SpringHill Suites Manhattan/Chelsea</span><em>Toca para cerrar</em></div>
 
 <div class="nav">
   <div class="pill"><a class="logo" href="#top">NYC<span>·</span>26</a></div>
   <div class="pill">
     <nav class="nav-links" id="navlinks">
-      <a href="#itinerario">Itinerario</a><a href="#explorar">Explorar</a><a href="#rutas">Rutas</a><a href="#inspiracion">Inspiración</a><a href="#mapa">Mapa</a><a href="#reservas">Reservas</a>
+      <a href="#hoy">Hoy</a><a href="#itinerario">Itinerario</a><a href="#explorar">Explorar</a><a href="#rutas">Rutas</a><a href="#inspiracion">Inspiración</a><a href="#mapa">Mapa</a><a href="#reservas">Reservas</a>
     </nav>
     <button class="menu-btn" id="menuBtn" aria-label="Menú">☰</button>
   </div>
 </div>
 <div class="mobile-menu" id="mmenu">
-  <a href="#itinerario">Itinerario</a><a href="#explorar">Explorar</a><a href="#rutas">Rutas</a><a href="#inspiracion">Inspiración</a><a href="#mapa">Mapa</a><a href="#reservas">Reservas</a><a href="#presupuesto">Presupuesto</a><a href="#tips">Tips</a>
+  <a href="#hoy">Hoy</a><a href="#itinerario">Itinerario</a><a href="#explorar">Explorar</a><a href="#rutas">Rutas</a><a href="#inspiracion">Inspiración</a><a href="#mapa">Mapa</a><a href="#reservas">Reservas</a><a href="#presupuesto">Presupuesto</a><a href="#tips">Tips</a><a href="#emergencia">Emergencia</a>
 </div>
 
 <header class="hero" id="top">
@@ -375,6 +444,13 @@ footer a{color:var(--taxi)}
 </header>
 
 <div class="marquee"><div class="track" id="mq"></div></div>
+
+<section class="s hoy" id="hoy" style="padding-top:80px">
+  <div class="wrap">
+    <div class="eyebrow">Hoy en NY</div>
+    <div class="hoy-card reveal" id="hoyCard"></div>
+  </div>
+</section>
 
 <section class="s" style="padding-top:80px">
   <div class="wrap">
@@ -396,7 +472,7 @@ footer a{color:var(--taxi)}
     <h2 class="big split">Día a <span class="serif">día</span></h2>
     <p class="lead reveal">Toca un día. Cada plan trae cómo llegar, la web oficial y un botón para proponer cambios.</p>
     <div class="days" id="days"></div>
-    <div class="dayhead"><h3 id="dayTitle"></h3><span class="tot" id="dayTot"></span></div>
+    <div class="dayhead"><h3 id="dayTitle"></h3><div class="chips"><span class="daywx" id="dayWx"></span><span class="tot" id="dayTot"></span></div></div>
     <div class="acts" id="cards"></div>
   </div>
 </section>
@@ -482,6 +558,15 @@ footer a{color:var(--taxi)}
   </div>
 </section>
 
+<section class="s" id="emergencia">
+  <div class="wrap">
+    <div class="eyebrow">09 — Emergencia</div>
+    <h2 class="big split">Por si <span class="serif">acaso</span></h2>
+    <p class="lead reveal">Esta sección también funciona sin internet. La tarjeta amarilla es para mostrarle al taxista o al Uber.</p>
+    <div class="emg-grid" id="emgGrid"></div>
+  </div>
+</section>
+
 <footer>
   <div class="wrap">
     <p class="huge split-f">See you<br>in <span class="y">NYC.</span></p>
@@ -558,13 +643,16 @@ const favs=()=>store.get("nyc_fav",{});
 
 /* ---------- itinerario ---------- */
 function renderDays(){const el=document.getElementById("days");
-  el.innerHTML=DAYS.map(d=>{const dt=dParts(d);return `<button class="tk ${d===curDay?"on":""}" data-d="${d}"><small>${WD[dt.getDay()]}</small><b>${dt.getDate()}</b><span>${esc(DAY_TAGS[d]||"")}</span></button>`;}).join("");
+  el.innerHTML=DAYS.map(d=>{const dt=dParts(d);return `<button class="tk ${d===curDay?"on":""}" data-d="${d}"><small>${WD[dt.getDay()]}</small><em class="wx">${wxShort(d)}</em><b>${dt.getDate()}</b><span>${esc(DAY_TAGS[d]||"")}</span></button>`;}).join("");
   el.querySelectorAll(".tk").forEach(b=>b.onclick=()=>{curDay=b.dataset.d;store.set("nyc_day",curDay);el.querySelectorAll(".tk").forEach(x=>x.classList.toggle("on",x===b));renderItin(true);});}
 const dayCost=(d,inc)=>ACT.filter(a=>a.fecha===d&&(inc||a.opcional!=="si")).reduce((s,a)=>s+(+a.costo_usd_pp||0),0);
 function statusHTML(a){const m=a.estado==="Confirmado"?["ok","Confirmado"]:a.estado==="Por reservar"?["res","Por reservar"]:["pc","Por confirmar"];return `<span class="status ${m[0]}">${m[1]}</span>`;}
 function renderItin(animate){
   const d=curDay,t=document.getElementById("dayTitle");t.textContent=`${dayLabel(d)} · ${DAY_TAGS[d]||""}`;t.dataset.text=t.textContent;
   document.getElementById("dayTot").textContent=`~$${dayCost(d,false)} por persona en planes`;
+  const dw=document.getElementById("dayWx"),w=wxFor(d);
+  if(w){const [e,tx]=WMO(w.code);dw.textContent=`${e} ${tx} · ${Math.round(w.max)}° / ${Math.round(w.min)}° · 💧 ${w.p}%${w.p>=50?" · ☔ lleven paraguas":""}`;dw.className="daywx"+(w.p>=50?" rain":"");dw.style.display="";}
+  else dw.style.display="none";
   const box=document.getElementById("cards");
   box.innerHTML=ACT.filter(a=>a.fecha===d).map(a=>{const k=catOf(a.categoria);
     const iss=issueURL(`Cambio: ${a.actividad} (${dayLabel(a.fecha)})`,`Actividad #${a.id}: ${a.actividad}\nHora actual: ${a.hora}\n\n¿Qué quieres cambiar?\n- `);
@@ -580,6 +668,96 @@ function renderItin(animate){
   const cards=[...box.children];cards.forEach(c=>{tilt(c,4);const h=c.querySelector("h4");c.addEventListener("mouseenter",()=>scramble(h,420));});
   if(animate){scramble(t,500);enter(cards);}
   if(window.ScrollTrigger)ScrollTrigger.refresh();
+}
+
+/* ---------- hora de NY ---------- */
+const QS=new URLSearchParams(location.search);
+function nyNow(){
+  const q=QS.get("ahora");
+  if(q){const [d,t="00:00"]=q.split("T");const [h,m]=t.split(":").map(Number);return {date:d,min:h*60+(m||0),fake:true};}
+  const p=Object.fromEntries(new Intl.DateTimeFormat("en-CA",{timeZone:"America/New_York",year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit",hour12:false}).formatToParts(new Date()).map(x=>[x.type,x.value]));
+  return {date:`${p.year}-${p.month}-${p.day}`,min:(+p.hour%24)*60+(+p.minute)};
+}
+const toMin=h=>{const [a,b]=h.split(":").map(Number);return a*60+(b||0);};
+const dayNum=d=>{const [y,m,dd]=d.split("-").map(Number),[y0,m0,d0]=DAYS[0].split("-").map(Number);return Math.round((Date.UTC(y,m-1,dd)-Date.UTC(y0,m0-1,d0))/864e5);};
+function fmtDur(min){if(min<60)return `${min} min`;if(min<1440){const h=Math.floor(min/60),m=min%60;return `${h} h${m?` ${m} min`:""}`;}const d=Math.round(min/1440);return `${d} día${d>1?"s":""}`;}
+
+/* ---------- clima (Open-Meteo) ---------- */
+const WMO=c=>{c=+c;if(c===0)return["☀️","Despejado"];if(c===1)return["🌤️","Casi despejado"];if(c===2)return["⛅","Parcialmente nublado"];if(c===3)return["☁️","Nublado"];if(c===45||c===48)return["🌫️","Niebla"];
+  if(c>=51&&c<=57)return["🌦️","Llovizna"];if(c>=61&&c<=67)return["🌧️","Lluvia"];if(c>=71&&c<=77)return["🌨️","Nieve"];if(c>=80&&c<=82)return["🌦️","Chubascos"];if(c===85||c===86)return["🌨️","Chubascos de nieve"];if(c>=95)return["⛈️","Tormenta"];return["🌡️","—"];};
+let WX={},WXT=0;
+function wxFor(d){return WX[d];}
+function wxShort(d){const w=wxFor(d);if(!w)return "";return `${WMO(w.code)[0]} ${Math.round(w.max)}°`;}
+async function loadWx(){
+  const c=store.get("nyc_wx",null);
+  if(c&&c.data){WX=c.data;WXT=c.t;}
+  if(c&&Date.now()-c.t<3*3600e3)return;
+  try{
+    const u="https://api.open-meteo.com/v1/forecast?latitude=40.7466&longitude=-73.9928&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=America%2FNew_York&forecast_days=16";
+    const j=await (await fetch(u)).json();const D={};
+    j.daily.time.forEach((t,i)=>D[t]={code:j.daily.weather_code[i],max:j.daily.temperature_2m_max[i],min:j.daily.temperature_2m_min[i],p:j.daily.precipitation_probability_max[i]});
+    WX=D;WXT=Date.now();store.set("nyc_wx",{t:WXT,data:D});
+  }catch(e){}
+}
+
+/* ---------- modo hoy ---------- */
+let deferredInstall=null;
+const isStandalone=()=>matchMedia("(display-mode: standalone)").matches||navigator.standalone===true;
+function wxStrip(){
+  const days=DAYS.map(d=>{const w=wxFor(d),dt=dParts(d);
+    if(!w)return `<div class="wxd na"><small>${WD[dt.getDay()]} ${dt.getDate()}</small><span class="e">·</span><span>aún sin dato</span></div>`;
+    const [e,t]=WMO(w.code);return `<div class="wxd ${w.p>=50?"rain":""}" title="${t}"><small>${WD[dt.getDay()]} ${dt.getDate()}</small><span class="e">${e}</span><b>${Math.round(w.max)}°</b> / ${Math.round(w.min)}°<span class="p">💧 ${w.p}%</span></div>`;}).join("");
+  const ago=WXT?Math.max(0,Math.round((Date.now()-WXT)/3600e3)):null;
+  return `<div class="wxhead"><b>Pronóstico del viaje</b><span>${ago===null?"Sin conexión al servicio de clima":`Open-Meteo · actualizado hace ${ago?ago+" h":"menos de 1 h"}`} · cambia día a día</span></div><div class="wxrow">${days}</div>`;
+}
+function slotHTML(kind,a,extra){const k=catOf(a.categoria);
+  return `<div class="slot ${kind}"><small>${kind==="next"?"Siguiente":"Ahora"}</small><h4>${k.e} ${esc(a.actividad)}</h4><div class="when">${dayLabel(a.fecha)} · ${esc(a.hora)} · ${esc(a.lugar)}</div>${extra||""}</div>`;}
+function renderHoy(){
+  if(!DAYS.length)return;
+  const now=nyNow(),nowAbs=dayNum(now.date)*1440+now.min;
+  const tl=ACT.filter(a=>a.opcional!=="si").map(a=>({a,abs:dayNum(a.fecha)*1440+toMin(a.hora)})).sort((x,y)=>x.abs-y.abs);
+  let cur=null,next=null;for(const x of tl){if(x.abs<=nowAbs)cur=x;else{next=x;break;}}
+  const el=document.getElementById("hoyCard");
+  const install=isStandalone()?"":`<button class="ab" id="btnInstall">📲 Instalar en el celular</button>`;
+  const sim=now.fake?`<span class="sim">Simulando ${esc(QS.get("ahora"))}</span>`:"";
+  let body,top;
+  if(!cur){ // antes del viaje
+    const mins=next.abs-nowAbs,days=dayNum(next.a.fecha)-dayNum(now.date);
+    const done=store.get("nyc_res",{}),pend=RES.filter(r=>!done[r.id]&&(r.prioridad==="Urgente"||r.prioridad==="Alta"));
+    top=`<span class="live" style="color:#fff">✈️ Cuenta regresiva</span>${sim}`;
+    body=`<div class="big-count">${days<1?fmtDur(mins):days}<small>${days<1?"para el primer plan":days===1?"día para el viaje":"días para el viaje"}</small></div>
+      <div class="hoy-grid" style="margin-top:18px">${slotHTML("next",next.a,`<span class="eta">Arranca el ${dayLabel(next.a.fecha)} a las ${esc(next.a.hora)}</span>`)}
+      <div class="slot"><small>Antes de irse</small><h4>${pend.length?`${pend.length} reservas importantes sin marcar`:"Reservas importantes listas ✓"}</h4><div class="when">${pend.slice(0,4).map(r=>esc(r.que)).join(" · ")||"Buen trabajo."}</div></div></div>
+      <div class="actions"><a class="ab pri" href="#reservas">Ver reservas</a>${install}</div>`;
+  }else if(!next&&nowAbs-cur.abs>240){ // después
+    top=`<span class="live" style="color:#fff">🏠 De vuelta</span>${sim}`;
+    body=`<div class="big-count">¡Qué viaje!<small>NYC · nov 2026</small></div>`;
+  }else{
+    top=`<span class="live"><i></i>En vivo · hora de NY ${String(Math.floor(now.min/60)).padStart(2,"0")}:${String(now.min%60).padStart(2,"0")}</span>${sim}`;
+    const eta=next?`<span class="eta">⏱ en ${fmtDur(next.abs-nowAbs)}</span>`:"";
+    body=`<div class="hoy-grid">${slotHTML("",cur.a)}${next?slotHTML("next",next.a,eta):`<div class="slot next"><small>Siguiente</small><h4>✈️ Fin del plan</h4></div>`}</div>
+      <div class="actions">${next?`<a class="ab pri" href="${dirURL(next.a.lat,next.a.lon)}" target="_blank" rel="noopener">${IC.nav}Cómo llegar a lo siguiente</a>`:""}<button class="ab" id="btnToday">📅 Ver el día completo</button>${install}</div>`;
+  }
+  el.innerHTML=`<div class="hoy-top">${top}</div>${body}${wxStrip()}`;
+  const bt=document.getElementById("btnToday");if(bt)bt.onclick=()=>{if(DAYS.includes(now.date)){curDay=now.date;renderDays();renderItin(true);}document.getElementById("itinerario").scrollIntoView({behavior:"smooth"});};
+  const bi=document.getElementById("btnInstall");if(bi)bi.onclick=async()=>{
+    if(deferredInstall){deferredInstall.prompt();await deferredInstall.userChoice.catch(()=>null);deferredInstall=null;renderHoy();return;}
+    const ios=/iphone|ipad|ipod/i.test(navigator.userAgent);
+    toast(ios?"En iPhone: abre en Safari → botón Compartir ⬆️ → «Agregar a inicio»":"Menú del navegador (⋮) → «Instalar app» o «Agregar a pantalla de inicio»");};
+}
+
+/* ---------- emergencia ---------- */
+let EMG=[];
+function renderEmg(){
+  document.getElementById("emgGrid").innerHTML=EMG.map(e=>{
+    const cls=e.tipo==="taxi"?"taxi":e.valor==="911"?"sos":"";
+    let acts="";
+    if(e.tipo==="taxi")acts=`<button class="ab pri" data-taxi>🚕 Mostrar en grande</button><a class="ab" href="${esc(e.link)}" target="_blank" rel="noopener">${IC.map}Mapa</a><button class="ab" data-copy="${esc(e.valor)}">Copiar dirección</button>`;
+    else if(e.tipo==="tel")acts=`<a class="ab pri" href="${esc(e.link)}">📞 Llamar</a><button class="ab" data-copy="${esc(e.valor)}">Copiar</button>`;
+    else if(e.tipo==="web")acts=`<a class="ab" href="${esc(e.link)}" target="_blank" rel="noopener">${IC.web}Abrir</a>`;
+    return `<div class="emg ${cls}"><small>${esc(e.titulo)}</small><div class="val">${esc(e.valor)}</div>${e.detalle?`<p>${esc(e.detalle)}</p>`:""}${acts?`<div class="actions">${acts}</div>`:""}</div>`;}).join("");
+  document.querySelectorAll("[data-copy]").forEach(b=>b.onclick=()=>{(navigator.clipboard?navigator.clipboard.writeText(b.dataset.copy):Promise.reject()).then(()=>toast("Copiado ✓")).catch(()=>toast(b.dataset.copy));});
+  document.querySelectorAll("[data-taxi]").forEach(b=>b.onclick=()=>document.getElementById("taxiFull").classList.add("on"));
 }
 
 /* ---------- explorar ---------- */
@@ -676,7 +854,7 @@ function renderPres(){const inc=document.getElementById("incOpt").checked,vals=D
 function countTo(el,to,dur=1.4){if(RM||!window.gsap){el.textContent=to;return;}const o={v:+el.textContent||0};gsap.to(o,{v:to,duration:dur,ease:"power2.out",onUpdate:()=>el.textContent=Math.round(o.v)});}
 
 /* misc */
-function countdown(){const ms=TRIP_START-new Date(),days=Math.ceil(ms/864e5);document.getElementById("count").textContent=ms>0?`Faltan ${days} días · salimos el sáb 21`:(new Date()<new Date(2026,10,28,12)?"¡Estamos en NY! 🗽":"Viaje terminado");}
+function countdown(){const n=nyNow().date,days=DAYS.length?dayNum(DAYS[0])-dayNum(n):1,last=DAYS.length?DAYS[DAYS.length-1]:"";document.getElementById("count").textContent=days>1?`Faltan ${days} días · salimos el sáb 21`:days===1?"¡Mañana viajamos! ✈️":(n<=last?"¡Estamos en NY! 🗽":"Viaje terminado · NYC 2026");}
 function buildMarquee(){const words=["Pizza","Broadway","Knicks","Central Park","Friends","Macy's Parade #100","DUMBO","Black Friday","Rooftops","Statue of Liberty","Cumpleaños 🎂","Koreatown","Jazz","Chinatown"];const html=words.map(w=>`<span>${w}</span><span>✦</span>`).join("");document.getElementById("mq").innerHTML=html+html;}
 function buildTips(){document.getElementById("tipsGrid").innerHTML=TIPS.map(t=>`<div class="flip"><div class="in"><div class="fa"><div class="ic">${t[0]}</div><div><h4>${t[1]}</h4><small>Toca para ver →</small></div></div><div class="ba">${t[2]}</div></div></div>`).join("");document.querySelectorAll(".flip").forEach(f=>f.onclick=()=>f.classList.toggle("f"));}
 
@@ -723,6 +901,11 @@ function setupExploreCtrls(){let t;document.getElementById("q").addEventListener
   fv.onclick=()=>{oFav=!oFav;fv.classList.toggle("on",oFav);oLimit=12;renderOpts(true);};}
 
 /* boot */
+document.getElementById("taxiFull").onclick=e=>e.currentTarget.classList.remove("on");
+addEventListener("beforeinstallprompt",e=>{e.preventDefault();deferredInstall=e;if(DAYS.length)renderHoy();});
+const setOffline=()=>document.getElementById("offline").classList.toggle("on",!navigator.onLine);
+addEventListener("online",()=>{setOffline();toast("Conexión de vuelta ✓");});addEventListener("offline",setOffline);setOffline();
+if("serviceWorker" in navigator&&(location.protocol==="https:"||location.hostname==="localhost"))addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));
 let CITY=null;try{CITY=window.initCity&&initCity(document.getElementById("city"),document.getElementById("top"),{reduced:RM,tip:document.getElementById("cityTip")});}catch(e){console.warn("Ciudad 3D no disponible",e);}
 if(!CITY)document.getElementById("city").style.display="none";
 buildMarquee();buildTips();setupMenu();setupExploreCtrls();
@@ -733,16 +916,18 @@ document.getElementById("incOpt").onchange=renderPres;
 const loadStart=performance.now();let started=false;const prog={v:0},lnum=document.getElementById("lnum"),lbar=document.getElementById("lbar");
 const setProg=v=>{lnum.textContent=Math.round(v);lbar.style.width=v+"%";};
 const fake=window.gsap&&!RM?gsap.to(prog,{v:85,duration:1.4,ease:"power2.out",onUpdate:()=>setProg(prog.v)}):null;
-const files=["itinerario","reservas","opciones","rutas","inspiracion"];
+const files=["itinerario","reservas","opciones","rutas","inspiracion","emergencia"];
 Promise.all(files.map(n=>fetch(`data/${n}.csv`,{cache:"no-store"}).then(r=>{if(!r.ok)throw new Error(n+".csv");return r.text();})))
-.then(([a,r,o,ru,ins])=>{
-  ACT=parseCSV(a).sort((x,y)=>(x.fecha+x.hora).localeCompare(y.fecha+y.hora));RES=parseCSV(r);OPT=parseCSV(o);ROUT=parseCSV(ru);INSP=parseCSV(ins);
+.then(([a,r,o,ru,ins,em])=>{
+  ACT=parseCSV(a).sort((x,y)=>(x.fecha+x.hora).localeCompare(y.fecha+y.hora));RES=parseCSV(r);OPT=parseCSV(o);ROUT=parseCSV(ru);INSP=parseCSV(ins);EMG=parseCSV(em);
   DAYS=[...new Set(ACT.map(x=>x.fecha))].sort();
-  const t=new Date(),k=`${t.getFullYear()}-${String(t.getMonth()+1).padStart(2,"0")}-${String(t.getDate()).padStart(2,"0")}`;
-  if(!DAYS.includes(curDay))curDay=DAYS.includes(k)?k:DAYS[0];
+  const k=nyNow().date;
+  if(DAYS.includes(k))curDay=k;else if(!DAYS.includes(curDay))curDay=DAYS[0];
   document.getElementById("stPlans").dataset.count=ACT.filter(x=>x.opcional!=="si").length;
   document.getElementById("stOpts").dataset.count=OPT.length;document.getElementById("stRoutes").dataset.count=ROUT.length;
-  renderDays();renderItin(false);renderCats();renderOpts(false);renderRoutes();renderInspCats();renderInsp(false);renderMapDays();renderRes();renderPres();countdown();
+  renderDays();renderItin(false);renderCats();renderOpts(false);renderRoutes();renderInspCats();renderInsp(false);renderMapDays();renderRes();renderPres();countdown();renderEmg();renderHoy();
+  setInterval(renderHoy,30000);
+  loadWx().then(()=>{renderHoy();renderDays();renderItin(false);});
 })
 .catch(e=>{const el=document.getElementById("err");el.classList.remove("hidden");el.textContent="No se pudieron cargar los datos ("+e.message+"). Abre la página publicada o usa un servidor local.";})
 .finally(()=>{const wait=Math.max(0,1500-(performance.now()-loadStart));

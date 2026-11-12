@@ -1,0 +1,7 @@
+id,tipo,titulo,valor,detalle,link
+e1,taxi,Llévame al hotel,"SpringHill Suites Manhattan/Chelsea · 140 West 28th Street, New York, NY 10001",Entre 6th Ave y 7th Ave. Muéstrenle esta tarjeta al conductor.,https://www.google.com/maps/search/?api=1&query=140+West+28th+Street+New+York+NY+10001
+e2,tel,Emergencias (policía · bomberos · ambulancia),911,Gratis desde cualquier celular. Digan su ubicación primero.,tel:911
+e3,tel,Consulado de Colombia en Nueva York,+1 212 798 9000,"10 E 46th St, New York, NY 10017. Atienden con cita; confirmen horario en la web oficial.",tel:+12127989000
+e4,tel,Hotel (recepción),+1 929 990 2800,Número sacado de directorios de hoteles: confírmenlo con su correo de reserva.,tel:+19299902800
+e5,nota,Seguro de viaje,Anoten aquí el teléfono de su aseguradora,No lo pongo en la página porque el repositorio es público. Guárdenlo en el celular.,
+e6,web,Web oficial del consulado,nuevayork.consulado.gov.co,"Trámites, citas y emergencias consulares.",https://nuevayork.consulado.gov.co
