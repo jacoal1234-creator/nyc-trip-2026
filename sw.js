@@ -2,11 +2,11 @@
    - Página, scripts y estilos: se sirven de la caché y se actualizan por detrás.
    - Datos (CSV) y clima: primero la red; si no hay señal, lo último guardado.
    - Mapa: guarda los pedazos de mapa que ya vieron (máx. ~400). */
-const V = "nyc26-v1";
+const V = "nyc26-v2";
 const SHELL = [
   "./", "index.html", "city3d.js", "manifest.webmanifest",
   "icons/icon-192.png", "icons/icon-512.png", "icons/apple-touch-icon.png",
-  "data/itinerario.csv", "data/reservas.csv", "data/opciones.csv", "data/rutas.csv", "data/inspiracion.csv", "data/emergencia.csv",
+  "data/itinerario.csv", "data/reservas.csv", "data/opciones.csv", "data/rutas.csv", "data/inspiracion.csv", "data/emergencia.csv", "data/miradores.csv",
   "https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js",
   "https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js",
   "https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js",

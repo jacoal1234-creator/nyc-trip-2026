@@ -342,6 +342,34 @@ footer a{color:var(--taxi)}
 .cursor.big{width:56px;height:56px}
 .toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,120px);background:var(--night);color:#fff;padding:12px 18px;border-radius:999px;font-size:14px;font-weight:600;z-index:3000;transition:transform .5s cubic-bezier(.2,.8,.2,1);box-shadow:0 10px 30px rgba(0,0,0,.3)}
 .toast.show{transform:translate(-50%,0)}
+/* ---------- MIRADORES ---------- */
+.mgrid{display:grid;gap:16px;grid-template-columns:1fr}
+@media(min-width:760px){.mgrid{grid-template-columns:1fr 1fr}}
+@media(min-width:1100px){.mgrid{grid-template-columns:repeat(3,1fr)}}
+.mc{position:relative;background:var(--card);border-radius:var(--radius);padding:22px 20px 18px;box-shadow:var(--shadow);transition:opacity .35s,transform .35s,box-shadow .35s;display:flex;flex-direction:column}
+.mc.rec{background:var(--night);color:#fff}
+.mc.dim{opacity:.35;transform:scale(.98)}
+.mc.hit{box-shadow:0 0 0 3px var(--taxi),var(--shadow)}
+.mc .rb{position:absolute;top:16px;right:16px;background:var(--taxi);color:var(--taxi-ink);font-size:12px;font-weight:700;padding:4px 10px;border-radius:999px}
+.mc h4{margin:0;font-size:24px;letter-spacing:-.03em;line-height:1.1;padding-right:110px}
+.mc .dn{font-size:13px;color:var(--muted);margin-top:2px}
+.mc.rec .dn,.mc.rec .lbl{color:rgba(255,255,255,.6)}
+.mc .pr{font-size:34px;font-weight:700;letter-spacing:-.04em;margin:14px 0 2px}
+.mc .pr small{font-size:13px;font-weight:500;letter-spacing:0;color:var(--muted)}
+.mc.rec .pr small{color:rgba(255,255,255,.6)}
+.hbar{height:8px;border-radius:99px;background:var(--line);overflow:hidden;margin:4px 0 2px}
+.mc.rec .hbar{background:rgba(255,255,255,.12)}
+.hbar i{display:block;height:100%;background:linear-gradient(90deg,#2b3ab8,var(--taxi));border-radius:99px}
+.lbl{font-size:12px;color:var(--muted);display:flex;justify-content:space-between}
+.mc ul{list-style:none;margin:14px 0 0;padding:0;display:grid;gap:8px;font-size:14px}
+.mc li{display:grid;grid-template-columns:22px 1fr;gap:4px}
+.mc .fit{margin-top:14px;background:var(--paper-2);border-radius:12px;padding:10px 12px;font-size:13.5px}
+.mc.rec .fit{background:rgba(255,194,26,.14);color:#fff}
+.mc .actions{margin-top:auto;padding-top:12px}
+.mc.rec .ab{color:#fff;border-color:rgba(255,255,255,.22)}
+.mc.rec .ab:hover{background:#fff;color:var(--night)}
+.mc.rec .ab.pri{background:var(--taxi);color:var(--taxi-ink);border-color:transparent}
+.mwx{font-size:14px;color:var(--muted);margin:-8px 0 16px}
 /* ---------- HOY ---------- */
 .hoy-card{position:relative;background:var(--night);color:#fff;border-radius:28px;padding:24px 20px;overflow:hidden;isolation:isolate}
 @media(min-width:800px){.hoy-card{padding:34px 36px}}
@@ -369,10 +397,11 @@ footer a{color:var(--taxi)}
 .wxhead b{color:#fff;font-size:15px}
 .wxrow{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
 .wxrow::-webkit-scrollbar{display:none}
-.wxd{flex:0 0 auto;min-width:88px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:10px 8px;text-align:center;font-size:12px}
+.wxd{flex:0 0 auto;min-width:108px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:10px 8px;text-align:center;font-size:12px}
 .wxd .e{font-size:26px;display:block;line-height:1.3}
 .wxd b{font-size:15px}
 .wxd .p{display:block;color:#9fc3ff;font-weight:700;margin-top:2px}
+.wxd .t{display:block;font-size:11px;color:rgba(255,255,255,.65);margin-bottom:4px;white-space:nowrap}
 .wxd.rain{border-color:#9fc3ff}
 .wxd.na{opacity:.45}
 .tk .wx{position:absolute;top:14px;right:12px;font-size:12px;font-weight:700;color:var(--muted);font-style:normal}
@@ -427,7 +456,7 @@ footer a{color:var(--taxi)}
   </div>
 </div>
 <div class="mobile-menu" id="mmenu">
-  <a href="#hoy">Hoy</a><a href="#itinerario">Itinerario</a><a href="#explorar">Explorar</a><a href="#rutas">Rutas</a><a href="#inspiracion">Inspiración</a><a href="#mapa">Mapa</a><a href="#reservas">Reservas</a><a href="#presupuesto">Presupuesto</a><a href="#tips">Tips</a><a href="#emergencia">Emergencia</a>
+  <a href="#hoy">Hoy</a><a href="#itinerario">Itinerario</a><a href="#miradores">Miradores</a><a href="#explorar">Explorar</a><a href="#rutas">Rutas</a><a href="#inspiracion">Inspiración</a><a href="#mapa">Mapa</a><a href="#reservas">Reservas</a><a href="#presupuesto">Presupuesto</a><a href="#tips">Tips</a><a href="#emergencia">Emergencia</a>
 </div>
 
 <header class="hero" id="top">
@@ -474,6 +503,17 @@ footer a{color:var(--taxi)}
     <div class="days" id="days"></div>
     <div class="dayhead"><h3 id="dayTitle"></h3><div class="chips"><span class="daywx" id="dayWx"></span><span class="tot" id="dayTot"></span></div></div>
     <div class="acts" id="cards"></div>
+  </div>
+</section>
+
+<section class="s" id="miradores">
+  <div class="wrap">
+    <div class="eyebrow">★ — Miradores</div>
+    <h2 class="big split">¿Cuál <span class="serif">mirador?</span></h2>
+    <p class="lead reveal">Los 5 miradores comparados con precios 2026 (cambian según fecha y hora). Toquen lo que más les importa y se resaltan los que cumplen.</p>
+    <div class="mwx" id="mwx"></div>
+    <div class="cats" id="mtags"></div>
+    <div class="mgrid" id="mgrid"></div>
   </div>
 </section>
 
@@ -625,7 +665,7 @@ const store={get(k,d){try{return JSON.parse(localStorage.getItem(k))??d}catch(e)
 const issueURL=(t,b)=>`https://github.com/${REPO}/issues/new?title=${encodeURIComponent(t)}&body=${encodeURIComponent(b)}`;
 const dayLabel=d=>{const dt=dParts(d);return `${WDL[dt.getDay()]} ${dt.getDate()} nov`;};
 const dirURL=(lat,lon)=>`https://www.google.com/maps/dir/?api=1&destination=${lat},${lon}&travelmode=transit`;
-const price=v=>+v>0?`$${+v}`:"Gratis";
+const price=v=>v===""||v==null?"—":+v>0?`$${+v}`:"Gratis";
 function toast(msg){const t=document.getElementById("toast");t.textContent=msg;t.classList.add("show");clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove("show"),1800);}
 const GLYPHS="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#*+";
 function scramble(el,dur=600){if(RM||el._scr)return;const final=el.dataset.text||el.textContent;el.dataset.text=final;el._scr=true;const t0=performance.now();
@@ -651,7 +691,7 @@ function renderItin(animate){
   const d=curDay,t=document.getElementById("dayTitle");t.textContent=`${dayLabel(d)} · ${DAY_TAGS[d]||""}`;t.dataset.text=t.textContent;
   document.getElementById("dayTot").textContent=`~$${dayCost(d,false)} por persona en planes`;
   const dw=document.getElementById("dayWx"),w=wxFor(d);
-  if(w){const [e,tx]=WMO(w.code);dw.textContent=`${e} ${tx} · ${Math.round(w.max)}° / ${Math.round(w.min)}° · 💧 ${w.p}%${w.p>=50?" · ☔ lleven paraguas":""}`;dw.className="daywx"+(w.p>=50?" rain":"");dw.style.display="";}
+  if(w){const [e,tx]=WMO(w.code);dw.textContent=`${e} ${tx} · ${Math.round(w.max)}°C / ${Math.round(w.min)}°C · 💧 ${w.p}%${w.p>=50?" · ☔ lleven paraguas":""}`;dw.className="daywx"+(w.p>=50?" rain":"");dw.style.display="";}
   else dw.style.display="none";
   const box=document.getElementById("cards");
   box.innerHTML=ACT.filter(a=>a.fecha===d).map(a=>{const k=catOf(a.categoria);
@@ -687,11 +727,11 @@ const WMO=c=>{c=+c;if(c===0)return["☀️","Despejado"];if(c===1)return["🌤�
   if(c>=51&&c<=57)return["🌦️","Llovizna"];if(c>=61&&c<=67)return["🌧️","Lluvia"];if(c>=71&&c<=77)return["🌨️","Nieve"];if(c>=80&&c<=82)return["🌦️","Chubascos"];if(c===85||c===86)return["🌨️","Chubascos de nieve"];if(c>=95)return["⛈️","Tormenta"];return["🌡️","—"];};
 let WX={},WXT=0;
 function wxFor(d){return WX[d];}
-function wxShort(d){const w=wxFor(d);if(!w)return "";return `${WMO(w.code)[0]} ${Math.round(w.max)}°`;}
+function wxShort(d){const w=wxFor(d);if(!w)return "";return `${WMO(w.code)[0]} ${Math.round(w.max)}°C`;}
 async function loadWx(){
   const c=store.get("nyc_wx",null);
   if(c&&c.data){WX=c.data;WXT=c.t;}
-  if(c&&Date.now()-c.t<3*3600e3)return;
+  if(c&&Date.now()-c.t<3600e3)return;
   try{
     const u="https://api.open-meteo.com/v1/forecast?latitude=40.7466&longitude=-73.9928&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=America%2FNew_York&forecast_days=16";
     const j=await (await fetch(u)).json();const D={};
@@ -706,9 +746,9 @@ const isStandalone=()=>matchMedia("(display-mode: standalone)").matches||navigat
 function wxStrip(){
   const days=DAYS.map(d=>{const w=wxFor(d),dt=dParts(d);
     if(!w)return `<div class="wxd na"><small>${WD[dt.getDay()]} ${dt.getDate()}</small><span class="e">·</span><span>aún sin dato</span></div>`;
-    const [e,t]=WMO(w.code);return `<div class="wxd ${w.p>=50?"rain":""}" title="${t}"><small>${WD[dt.getDay()]} ${dt.getDate()}</small><span class="e">${e}</span><b>${Math.round(w.max)}°</b> / ${Math.round(w.min)}°<span class="p">💧 ${w.p}%</span></div>`;}).join("");
+    const [e,t]=WMO(w.code);return `<div class="wxd ${w.p>=50?"rain":""}" title="${t}"><small>${WD[dt.getDay()]} ${dt.getDate()}</small><span class="e">${e}</span><span class="t">${t}</span><b>${Math.round(w.max)}°C</b> / ${Math.round(w.min)}°C<span class="p">💧 ${w.p}%</span></div>`;}).join("");
   const ago=WXT?Math.max(0,Math.round((Date.now()-WXT)/3600e3)):null;
-  return `<div class="wxhead"><b>Pronóstico del viaje</b><span>${ago===null?"Sin conexión al servicio de clima":`Open-Meteo · actualizado hace ${ago?ago+" h":"menos de 1 h"}`} · cambia día a día</span></div><div class="wxrow">${days}</div>`;
+  return `<div class="wxhead"><b>Pronóstico del viaje (°C)</b><span>${ago===null?"Sin conexión al servicio de clima":`Open-Meteo · actualizado hace ${ago?ago+" h":"menos de 1 h"}`} · cambia día a día</span></div><div class="wxrow">${days}</div>`;
 }
 function slotHTML(kind,a,extra){const k=catOf(a.categoria);
   return `<div class="slot ${kind}"><small>${kind==="next"?"Siguiente":"Ahora"}</small><h4>${k.e} ${esc(a.actividad)}</h4><div class="when">${dayLabel(a.fecha)} · ${esc(a.hora)} · ${esc(a.lugar)}</div>${extra||""}</div>`;}
@@ -723,7 +763,7 @@ function renderHoy(){
   let body,top;
   if(!cur){ // antes del viaje
     const mins=next.abs-nowAbs,days=dayNum(next.a.fecha)-dayNum(now.date);
-    const done=store.get("nyc_res",{}),pend=RES.filter(r=>!done[r.id]&&(r.prioridad==="Urgente"||r.prioridad==="Alta"));
+    const done=store.get("nyc_res",{}),pend=RES.filter(r=>r.hecha!=="si"&&!done[r.id]&&(r.prioridad==="Urgente"||r.prioridad==="Alta"));
     top=`<span class="live" style="color:#fff">✈️ Cuenta regresiva</span>${sim}`;
     body=`<div class="big-count">${days<1?fmtDur(mins):days}<small>${days<1?"para el primer plan":days===1?"día para el viaje":"días para el viaje"}</small></div>
       <div class="hoy-grid" style="margin-top:18px">${slotHTML("next",next.a,`<span class="eta">Arranca el ${dayLabel(next.a.fecha)} a las ${esc(next.a.hora)}</span>`)}
@@ -744,6 +784,29 @@ function renderHoy(){
     if(deferredInstall){deferredInstall.prompt();await deferredInstall.userChoice.catch(()=>null);deferredInstall=null;renderHoy();return;}
     const ios=/iphone|ipad|ipod/i.test(navigator.userAgent);
     toast(ios?"En iPhone: abre en Safari → botón Compartir ⬆️ → «Agregar a inicio»":"Menú del navegador (⋮) → «Instalar app» o «Agregar a pantalla de inicio»");};
+}
+
+/* ---------- miradores ---------- */
+let MIR=[],mTag="";
+const MTAGS=[["","✦ Todos"],["foto","📸 Mejor foto"],["experiencia","✨ Experiencia"],["adrenalina","🎢 Adrenalina"],["clasico","🏛️ Clásico"],["barato","💸 Más barato"],["altura","📏 Más alto"]];
+function renderMir(animate){
+  if(!MIR.length)return;
+  const mx=Math.max(...MIR.map(m=>+m.altura_m));
+  document.getElementById("mtags").innerHTML=MTAGS.map(([k,l])=>`<button class="cat ${k===mTag?"on":""}" data-k="${k}" style="--c:#0b0e1f">${l}</button>`).join("");
+  document.querySelectorAll("#mtags .cat").forEach(b=>b.onclick=()=>{mTag=b.dataset.k;renderMir(false);});
+  document.getElementById("mgrid").innerHTML=MIR.map(m=>{const tags=m.tags.split(","),hit=mTag&&tags.includes(mTag),dim=mTag&&!hit,rec=m.recomendado==="si";
+    return `<article class="mc ${rec?"rec":""} ${hit?"hit":""} ${dim?"dim":""}">${rec?'<span class="rb">⭐ Recomendado</span>':""}
+      <h4>${esc(m.nombre)}</h4><div class="dn">${esc(m.donde)}</div>
+      <div class="pr">$${esc(m.precio_min)}–${esc(m.precio_max)}<small> USD adulto, aprox.</small></div>
+      <div class="lbl"><span>Altura del mirador</span><b>~${esc(m.altura_m)} m</b></div><div class="hbar"><i style="width:${(+m.altura_m/mx*100).toFixed(0)}%"></i></div>
+      <ul><li>🌬️<span>Aire libre: ${esc(m.aire_libre)}</span></li><li>✅<span>${esc(m.lo_mejor)}</span></li><li>⚠️<span>${esc(m.lo_malo)}</span></li><li>🎯<span>Ideal para: ${esc(m.ideal_para)}</span></li></ul>
+      <div class="fit">📅 <b>En su plan:</b> ${esc(m.encaja)}</div>
+      <div class="actions"><a class="ab ${rec?"pri":""}" href="${esc(m.link)}" target="_blank" rel="noopener">${IC.web}Ver precios oficiales</a></div></article>`;}).join("");
+  const opts=DAYS.slice(1,7).filter(d=>wxFor(d)),el=document.getElementById("mwx");
+  if(opts.length){const best=opts.reduce((a,b)=>wxFor(a).p<=wxFor(b).p?a:b),w=wxFor(best);
+    el.innerHTML=`☀️ Día más despejado del pronóstico: <b>${dayLabel(best)}</b> (${WMO(w.code)[1].toLowerCase()}, ${w.p}% de lluvia, ${Math.round(w.min)}–${Math.round(w.max)}°C). Para un mirador al aire libre, ese es el día.`;}
+  else el.textContent="";
+  if(animate)enter([...document.querySelectorAll("#mgrid .mc")]);
 }
 
 /* ---------- emergencia ---------- */
@@ -836,13 +899,13 @@ function renderMap(){if(!window.L)return;
   setTimeout(()=>{map.invalidateSize();map.fitBounds(b,{padding:[40,40],maxZoom:15});},120);}
 
 /* ---------- reservas ---------- */
-function renderRes(){const done=store.get("nyc_res",{}),n=RES.filter(r=>done[r.id]).length;
+function renderRes(){const loc=store.get("nyc_res",{}),done={};RES.forEach(r=>done[r.id]=r.hecha==="si"||!!loc[r.id]);const n=RES.filter(r=>done[r.id]).length;
   document.getElementById("ringFg").style.strokeDashoffset=314.16*(1-(RES.length?n/RES.length:0));document.getElementById("ringTxt").textContent=`${n}/${RES.length}`;
   const order={Urgente:0,Alta:1,Media:2,Baja:3};
   document.getElementById("resList").innerHTML=[...RES].sort((a,b)=>order[a.prioridad]-order[b.prioridad]||a.fecha.localeCompare(b.fecha)).map(r=>`
-    <label class="res-row ${done[r.id]?"done":""}"><input type="checkbox" data-id="${r.id}" ${done[r.id]?"checked":""}>
+    <label class="res-row ${done[r.id]?"done":""}"><input type="checkbox" data-id="${r.id}" ${done[r.id]?"checked":""} ${r.hecha==="si"?"disabled":""}>
       <div><div class="rt">${esc(r.que)}<span class="prio ${esc(r.prioridad)}">${esc(r.prioridad)}</span></div>
-      <div class="rm">${dayLabel(r.fecha)} · ~$${esc(r.costo_usd_pp)} c/u · ${esc(r.nota)}</div>
+      <div class="rm">${dayLabel(r.fecha)}${r.costo_usd_pp?` · ~$${esc(r.costo_usd_pp)} c/u`:""} · ${esc(r.nota)}</div>
       <div class="rm"><a href="${esc(r.link)}" target="_blank" rel="noopener">Reservar →</a></div></div></label>`).join("");
   document.querySelectorAll("#resList input").forEach(c=>c.onchange=()=>{const d=store.get("nyc_res",{});d[c.dataset.id]=c.checked;store.set("nyc_res",d);if(c.checked)toast("¡Reserva marcada! ✓");renderRes();});}
 
@@ -870,6 +933,7 @@ function setupAnimations(){
   once("#cards",()=>enter([...document.querySelectorAll("#cards .act")]));
   once("#ogrid",()=>enter([...document.querySelectorAll("#ogrid .oc")]));
   once("#igrid",()=>enter([...document.querySelectorAll("#igrid .ins")]));
+  once("#mgrid",()=>enter([...document.querySelectorAll("#mgrid .mc")]));
   ScrollTrigger.batch(".route",{start:"top 90%",onEnter:b=>gsap.from(b,{y:80,opacity:0,rotateX:-20,transformPerspective:1000,stagger:.1,duration:.9,ease:"power3.out"})});
   ScrollTrigger.batch(".res-row",{start:"top 92%",onEnter:b=>gsap.from(b,{x:-30,opacity:0,stagger:.05,duration:.6,ease:"power3.out"})});
   ScrollTrigger.batch(".flip",{start:"top 92%",onEnter:b=>gsap.from(b,{rotateY:-90,opacity:0,transformPerspective:1000,stagger:.08,duration:.9,ease:"power3.out"})});
@@ -916,18 +980,18 @@ document.getElementById("incOpt").onchange=renderPres;
 const loadStart=performance.now();let started=false;const prog={v:0},lnum=document.getElementById("lnum"),lbar=document.getElementById("lbar");
 const setProg=v=>{lnum.textContent=Math.round(v);lbar.style.width=v+"%";};
 const fake=window.gsap&&!RM?gsap.to(prog,{v:85,duration:1.4,ease:"power2.out",onUpdate:()=>setProg(prog.v)}):null;
-const files=["itinerario","reservas","opciones","rutas","inspiracion","emergencia"];
+const files=["itinerario","reservas","opciones","rutas","inspiracion","emergencia","miradores"];
 Promise.all(files.map(n=>fetch(`data/${n}.csv`,{cache:"no-store"}).then(r=>{if(!r.ok)throw new Error(n+".csv");return r.text();})))
-.then(([a,r,o,ru,ins,em])=>{
-  ACT=parseCSV(a).sort((x,y)=>(x.fecha+x.hora).localeCompare(y.fecha+y.hora));RES=parseCSV(r);OPT=parseCSV(o);ROUT=parseCSV(ru);INSP=parseCSV(ins);EMG=parseCSV(em);
+.then(([a,r,o,ru,ins,em,mi])=>{
+  ACT=parseCSV(a).sort((x,y)=>(x.fecha+x.hora).localeCompare(y.fecha+y.hora));RES=parseCSV(r);OPT=parseCSV(o);ROUT=parseCSV(ru);INSP=parseCSV(ins);EMG=parseCSV(em);MIR=parseCSV(mi);
   DAYS=[...new Set(ACT.map(x=>x.fecha))].sort();
   const k=nyNow().date;
   if(DAYS.includes(k))curDay=k;else if(!DAYS.includes(curDay))curDay=DAYS[0];
   document.getElementById("stPlans").dataset.count=ACT.filter(x=>x.opcional!=="si").length;
   document.getElementById("stOpts").dataset.count=OPT.length;document.getElementById("stRoutes").dataset.count=ROUT.length;
-  renderDays();renderItin(false);renderCats();renderOpts(false);renderRoutes();renderInspCats();renderInsp(false);renderMapDays();renderRes();renderPres();countdown();renderEmg();renderHoy();
+  renderDays();renderItin(false);renderCats();renderOpts(false);renderRoutes();renderInspCats();renderInsp(false);renderMapDays();renderRes();renderPres();countdown();renderEmg();renderHoy();renderMir(false);
   setInterval(renderHoy,30000);
-  loadWx().then(()=>{renderHoy();renderDays();renderItin(false);});
+  loadWx().then(()=>{renderHoy();renderDays();renderItin(false);renderMir(false);});
 })
 .catch(e=>{const el=document.getElementById("err");el.classList.remove("hidden");el.textContent="No se pudieron cargar los datos ("+e.message+"). Abre la página publicada o usa un servidor local.";})
 .finally(()=>{const wait=Math.max(0,1500-(performance.now()-loadStart));
