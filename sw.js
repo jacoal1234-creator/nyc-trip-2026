@@ -2,7 +2,7 @@
    - Página, scripts y estilos: se sirven de la caché y se actualizan por detrás.
    - Datos (CSV) y clima: primero la red; si no hay señal, lo último guardado.
    - Mapa: guarda los pedazos de mapa que ya vieron (máx. ~400). */
-const V = "nyc26-v4";
+const V = "nyc26-v5";
 const SHELL = [
   "./", "index.html", "city3d.js", "manifest.webmanifest",
   "icons/icon-192.png", "icons/icon-512.png", "icons/apple-touch-icon.png",
