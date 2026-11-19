@@ -642,6 +642,7 @@ const TIPS=[
  ["🍸","Bares y rooftops","Edad mínima 21. Lleven el pasaporte físico: en muchos sitios no aceptan la cédula extranjera."],
  ["🛍️","Black Friday","Las tiendas abren muy temprano y se llenan. En NY normalmente no devuelven impuestos a turistas."],
  ["🌃","Regreso tarde","El metro funciona 24 h, pero de noche pasa menos seguido. Pasada la medianoche, mejor Uber entre los 3."],
+ ["🎟️","¿CityPASS?","Para su plan no vale la pena: pagando cada entrada salen igual o más barato y con más libertad de horarios. Solo conviene el C3 si suman un segundo mirador (Empire State)."],
  ["✈️","Sábado 28","Salgan del hotel a las 4:45 am. Programen el Uber la noche anterior y dejen las maletas listas el viernes."]
 ];
 const RM=matchMedia("(prefers-reduced-motion: reduce)").matches, FINE=matchMedia("(pointer:fine)").matches;
@@ -918,7 +919,7 @@ function countTo(el,to,dur=1.4){if(RM||!window.gsap){el.textContent=to;return;}c
 
 /* misc */
 function countdown(){const n=nyNow().date,days=DAYS.length?dayNum(DAYS[0])-dayNum(n):1,last=DAYS.length?DAYS[DAYS.length-1]:"";document.getElementById("count").textContent=days>1?`Faltan ${days} días · salimos el sáb 21`:days===1?"¡Mañana viajamos! ✈️":(n<=last?"¡Estamos en NY! 🗽":"Viaje terminado · NYC 2026");}
-function buildMarquee(){const words=["Pizza","Broadway","Knicks","Central Park","Friends","Macy's Parade #100","DUMBO","Black Friday","Rooftops","Statue of Liberty","Cumpleaños 🎂","Koreatown","Jazz","Chinatown"];const html=words.map(w=>`<span>${w}</span><span>✦</span>`).join("");document.getElementById("mq").innerHTML=html+html;}
+function buildMarquee(){const words=["Pizza","Broadway","Wollman Rink","Central Park","Friends","Macy's Parade #100","DUMBO","Black Friday","Rooftops","Statue of Liberty","Cumpleaños 🎂","Koreatown","Jazz","Chinatown"];const html=words.map(w=>`<span>${w}</span><span>✦</span>`).join("");document.getElementById("mq").innerHTML=html+html;}
 function buildTips(){document.getElementById("tipsGrid").innerHTML=TIPS.map(t=>`<div class="flip"><div class="in"><div class="fa"><div class="ic">${t[0]}</div><div><h4>${t[1]}</h4><small>Toca para ver →</small></div></div><div class="ba">${t[2]}</div></div></div>`).join("");document.querySelectorAll(".flip").forEach(f=>f.onclick=()=>f.classList.toggle("f"));}
 
 /* animations */
