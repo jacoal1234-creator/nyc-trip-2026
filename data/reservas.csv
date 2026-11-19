@@ -2,7 +2,7 @@ id,que,fecha,prioridad,costo_usd_pp,link,nota,hecha
 r1,Cena de Thanksgiving,2026-11-26,Urgente,90,https://www.opentable.com,Se agotan semanas antes. Menú fijo.,no
 r2,Cena de cumpleaños,2026-11-23,Urgente,70,https://www.opentable.com,Mesa para 3.,no
 r3,The Friends Experience,2026-11-23,Alta,50,https://friendstheexperience.com,✅ Reservado: lun 23 a las 3:30 pm.,si
-r4,Mirador: Top of the Rock (recomendado),2026-11-24,Alta,50,https://www.rockefellercenter.com/attractions/top-of-the-rock-observation-deck/,Turno 4:00–4:15 pm para el atardecer.,no
+r4,Mirador: Top of the Rock (recomendado),2026-11-27,Alta,50,https://www.rockefellercenter.com/attractions/top-of-the-rock-observation-deck/,Turno 3:45 pm (atardecer ~4:30). Plan B: mié 25 a las 5:45 pm.,no
 r5,Ferry Estatua de la Libertad,2026-11-24,Alta,25,https://www.statuecitycruises.com,Primer ferry desde Battery Park.,no
 r6,Show de Broadway,2026-11-24,Media,150,https://www.todaytix.com,Choca con Wollman el martes 24; definir otro día.,no
 r7,Knicks vs Heat,2026-11-27,Media,150,https://www.nba.com/knicks/schedule,Confirmar fecha oficial antes de comprar.,no

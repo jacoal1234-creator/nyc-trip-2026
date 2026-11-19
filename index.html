@@ -804,7 +804,7 @@ function renderMir(animate){
       <div class="actions"><a class="ab ${rec?"pri":""}" href="${esc(m.link)}" target="_blank" rel="noopener">${IC.web}Ver precios oficiales</a></div></article>`;}).join("");
   const opts=DAYS.slice(1,7).filter(d=>wxFor(d)),el=document.getElementById("mwx");
   if(opts.length){const best=opts.reduce((a,b)=>wxFor(a).p<=wxFor(b).p?a:b),w=wxFor(best);
-    el.innerHTML=`☀️ Día más despejado del pronóstico: <b>${dayLabel(best)}</b> (${WMO(w.code)[1].toLowerCase()}, ${w.p}% de lluvia, ${Math.round(w.min)}–${Math.round(w.max)}°C). Para un mirador al aire libre, ese es el día.`;}
+    const pl=ACT.find(a=>a.categoria==="Vistas"&&a.reserva==="si"&&a.opcional!=="si"),pw=pl&&wxFor(pl.fecha);el.innerHTML=(pl?`📅 Plan actual: <b>${esc(pl.actividad.replace(" ⭐",""))}</b> el <b>${dayLabel(pl.fecha)} a las ${esc(pl.hora)}</b>${pw?` · ${WMO(pw.code)[0]} ${Math.round(pw.min)}–${Math.round(pw.max)}°C, ${pw.p}% de lluvia`:""}.<br>`:"")+`☀️ Día más despejado del pronóstico: <b>${dayLabel(best)}</b> (${w.p}% de lluvia). Si el viernes se pone feo, el plan B es el miércoles 25 a las 5:45 pm, después del Museo de Historia Natural.`;}
   else el.textContent="";
   if(animate)enter([...document.querySelectorAll("#mgrid .mc")]);
 }
